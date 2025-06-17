@@ -1,0 +1,2331 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Auto Arremate® / Arremaq 3.0 - Trilha de Aprendizado</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* * =============================================
+         * Variáveis CSS (Paleta de Cores & Fontes)
+         * =============================================
+         */
+        :root {
+            /* Cores Principais */
+            --aa-green: #16B097;
+            --aa-dark-blue: #1C2E42;
+            --aa-light-gray: #AEB0B2;
+            --aa-medium-gray: #6c7a89;
+            --aa-white: #FFFFFF;
+            --aa-black: #000000;
+            --aa-green-darker: #0F8A7E;
+            --aa-green-text-dark-theme: #2DD4BF;
+            --aa-green-lighter: #D2F3EC;
+            --aa-green-pastel: #f0fdfa;
+            --aa-dark-blue-lighter: #2C4A6B;
+            --aa-green-darkest: #17575c;
+            --aa-shiny-gray-light: #E5E7EB;
+            --aa-shiny-gray-dark: #374151;
+
+            --arremaq-orange: #FF8C00;
+            --arremaq-orange-darker: #D97706;
+            --arremaq-orange-text-dark-theme: #FDBA74;
+            --arremaq-orange-lighter: #FFD073;
+            --arremaq-orange-pastel: #fffbeb;
+            --arremaq-orange-darkest: #6b3e00;
+
+            /* Fontes */
+            --font-headings-cover: 'Manrope', sans-serif;
+            --font-body-cover: 'Manrope', sans-serif;
+            --font-primary-portal: 'Manrope', sans-serif;
+            --font-headings-portal: 'Sora', sans-serif;
+
+            /* Fundos */
+            --bg-main-light: var(--aa-green-pastel); /* Default para capa e pitstop detalhes */
+            --bg-main-dark: #0a121c; /* Default para capa e pitstop detalhes */
+            --bg-content-light-portal: var(--aa-white);
+            --bg-content-dark-portal: #1e293b;
+            --bg-cards-section-light: #f0f4f8; /* Fundo do menu principal */
+            --bg-cards-section-dark: #111827;  /* Fundo do menu principal */
+
+            /* Ajuste para seções específicas */
+            --bg-pista-decolagem-light: var(--aa-green-pastel);
+            --bg-pista-decolagem-dark: #0a121c;
+
+            --bg-auto-arremate-light: var(--aa-green-pastel);
+            --bg-auto-arremate-dark: #0a121c;
+
+            --bg-arremaq-light: var(--arremaq-orange-pastel);
+            --bg-arremaq-dark: #1c1200;
+
+            /* Texto */
+            --text-headings-light-portal: var(--aa-dark-blue);
+            --text-headings-dark-portal: var(--aa-green-lighter); /* Default para AAR */
+            --text-body-light-portal: #334155;
+            --text-body-dark-portal: #cbd5e1;
+            --text-muted-light-portal: #616161;
+            --text-muted-dark-portal: #94a3b8;
+
+            /* Texto específico para ARREMAQ */
+            --text-headings-dark-arremaq: var(--arremaq-orange-lighter);
+            --text-body-light-arremaq: #4d443a;
+            --text-body-dark-arremaq: #e3dcd2;
+
+            /* Bordas */
+            --border-color-light-portal: #e2e8f0;
+            --border-color-dark-portal: #334155;
+            --border-color-dark-arremaq: #5b4a3a;
+
+            /* Sombras */
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+
+            /* Raio de Borda */
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --radius-xl: 1rem;
+            --radius-2xl: 1.5rem;
+            --radius-full: 9999px;
+            --radius-card-portal: 1.25rem;
+            --radius-button-portal: 0.75rem;
+
+            /* Transições */
+            --transition-main: .25s cubic-bezier(.4,0,.2,1);
+        }
+
+        /* * =============================================
+         * Estilos Globais e Tema Escuro
+         * =============================================
+         */
+        html {
+            scroll-behavior: smooth;
+            font-family: var(--font-body-cover);
+            font-size: 91%;
+        }
+        body {
+            margin: 0;
+            font-family: var(--font-body-cover);
+            background-color: var(--bg-main-light); /* Default */
+            color: var(--text-body-light-portal); /* Default */
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            line-height: 1.7;
+        }
+
+        /* Temas específicos para seções */
+        html[data-theme='dark'] body {
+            background-color: var(--bg-main-dark); /* Default */
+            color: var(--text-body-dark-portal); /* Default */
+        }
+
+        /* Sobrescrições de tema para seções específicas */
+        #arremaq-content-section {
+            background-color: var(--bg-arremaq-light);
+            color: var(--text-body-light-arremaq);
+        }
+        html[data-theme='dark'] #arremaq-content-section {
+            background-color: var(--bg-arremaq-dark);
+            color: var(--text-body-dark-arremaq);
+        }
+
+        /* Estilos para títulos e textos dentro de seções com tema ARREMAQ */
+        #arremaq-content-section .playbook-section-title {
+            color: var(--text-headings-light-portal); /* Usa a cor padrão de títulos claros */
+        }
+        html[data-theme='dark'] #arremaq-content-section .playbook-section-title {
+            color: var(--text-headings-dark-arremaq); /* Usa a cor de título escuro da ARREMAQ */
+        }
+        #arremaq-content-section .super-power-card .super-power-title {
+            color: var(--text-headings-light-portal);
+        }
+        html[data-theme='dark'] #arremaq-content-section .super-power-card .super-power-title {
+            color: var(--text-headings-dark-arremaq);
+        }
+
+        .hidden { display: none !important; }
+
+        /* Helpers para cores de marca e emojis */
+        .emoji-original-color { -webkit-text-fill-color: initial; text-fill-color: initial; background: none; display: inline-block; text-shadow: none; }
+        .text-aa-green-darker { color: var(--aa-green-darker) !important; }
+        html[data-theme='dark'] .text-aa-green-darker { color: var(--aa-green-text-dark-theme) !important; }
+        .text-arremaq-orange-darker { color: var(--arremaq-orange-darker) !important; }
+        html[data-theme='dark'] .text-arremaq-orange-darker { color: var(--arremaq-orange-text-dark-theme) !important; }
+
+        /* * =============================================
+         * Estilos da Seção de Capa
+         * =============================================
+         */
+        .capa-section { display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; padding: clamp(1.2rem, 4.8vw, 2.4rem) clamp(0.8rem, 4vw, 1.6rem); text-align: center; position: relative; background: linear-gradient(60deg, var(--arremaq-orange-pastel) 0%, var(--arremaq-orange-lighter) 15%, var(--aa-shiny-gray-light) 35%, var(--aa-green-lighter) 55%, var(--aa-shiny-gray-light) 75%, var(--aa-green-pastel) 90%, var(--arremaq-orange-pastel) 100%); background-size: 300% 300%; animation: backgroundGradientAnimation 20s ease infinite; overflow: hidden; }
+        html[data-theme='dark'] .capa-section { background: linear-gradient(60deg, var(--arremaq-orange-darkest) 0%, var(--arremaq-orange-darker) 15%, var(--aa-shiny-gray-dark) 35%, var(--aa-dark-blue) 55%, var(--aa-shiny-gray-dark) 75%, var(--aa-green-darkest) 90%, var(--arremaq-orange-darkest) 100%); background-size: 300% 300%; animation: backgroundGradientAnimation 20s ease infinite; }
+        @keyframes backgroundGradientAnimation { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+
+        .logos-container { display: flex; justify-content: center; align-items: center; gap: 1.2rem; margin-bottom: 1.2rem; }
+        .playbook-logo { width: 192px; max-width: 45%; height: auto; display: block; filter: drop-shadow(0 0.4rem 0.8rem rgba(0,0,0,0.1)); animation: logo-float 3s ease-in-out infinite alternate, logo-blink 2s linear infinite; }
+        html[data-theme='dark'] .playbook-logo {
+            filter: drop-shadow(0 0.4rem 0.8rem rgba(0,0,0,0.3)); /* Mantém a sombra */
+        }
+        @keyframes logo-float { 0% { transform: translateY(0px); } 100% { transform: translateY(-5px); } }
+        @keyframes logo-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+        .capa-title { font-family: var(--font-headings-cover); font-weight: 800; text-align: center; margin-top: 0.4em; margin-bottom: 0.6em; font-size: clamp(1rem, 2.2vw, 1.35rem); line-height: 1.5; text-transform: uppercase; letter-spacing: 0.05em; color: var(--aa-dark-blue); }
+        html[data-theme='dark'] .capa-title { color: var(--aa-green-lighter); }
+        .capa-title .capa-title-line { display: block; margin-bottom: 0.15em; }
+        .capa-title .capa-title-line:last-child { margin-bottom: 0; }
+        .capa-title.fun-title-effect { animation: fun-title-glow-animation 4s ease-in-out infinite alternate; position: relative; }
+
+        .frase-destaque { font-family: var(--font-headings-cover); font-size: clamp(0.845rem, 1.69vw, 1.17rem); font-weight: 700; background: transparent; border-radius: var(--radius-lg); padding: 0.3em 0.6em; margin-bottom: 0.8rem; margin-top: 0.6em; display: block; max-width: 90%; margin-left: auto; margin-right: auto; text-shadow: 0 1px 3px rgba(0,0,0,0.3); transition: all var(--transition-main); }
+        html[data-theme='dark'] .frase-destaque { text-shadow: 0 1px 3px rgba(0,0,0,0.6); }
+        .frase-destaque-verde { color: var(--aa-green-darker); }
+        html[data-theme='dark'] .frase-destaque-verde { color: var(--aa-green-text-dark-theme); }
+        .frase-destaque-laranja { color: var(--arremaq-orange-darker); }
+        html[data-theme='dark'] .frase-destaque-laranja { color: var(--arremaq-orange-text-dark-theme); }
+        .frase-destaque .emoji { margin: 0 0.25em; font-size: 1em; vertical-align: middle; -webkit-text-fill-color: initial; text-fill-color: initial; background: none; text-shadow: none; }
+        .frase-destaque.fun-frase-effect { animation: fun-frase-pulse 3s ease-in-out infinite; }
+        @keyframes fun-frase-pulse { 0%, 100% { transform: scale(1); opacity: 0.9; } 50% { transform: scale(1.02); opacity: 1; } }
+
+        .capa-criado { font-family: var(--font-body-cover); font-size: 0.78rem; color: var(--aa-dark-blue); opacity: 0.95; margin-top: 1rem; margin-bottom: 1rem; font-weight: 500; animation: created-by-pulse 5s infinite alternate; text-align: center; text-shadow: 0 1px 1px rgba(0,0,0,0.1); }
+        html[data-theme='dark'] .capa-criado { color: #E2E8F0; opacity: 0.9; text-shadow: 0 1px 1px rgba(0,0,0,0.2); }
+        @keyframes created-by-pulse { 0% { text-shadow: 0 0 3px rgba(22, 176, 151, 0.2), 0 0 1px rgba(255, 140, 0, 0.1); transform: scale(1); } 50% { text-shadow: 0 0 7px rgba(22, 176, 151, 0.4), 0 0 4px rgba(255, 140, 0, 0.3); transform: scale(1.03); } 100% { text-shadow: 0 0 3px rgba(22, 176, 151, 0.2), 0 0 1px rgba(255, 140, 0, 0.1); transform: scale(1); } }
+        .capa-criado .creator-name { font-weight: 700; background: linear-gradient(45deg, var(--aa-green-darker) 20%, var(--aa-green) 50%, var(--arremaq-orange) 80%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; text-fill-color: transparent; padding: 0 0.2em; display: inline-block; }
+        html[data-theme='dark'] .capa-criado .creator-name { background: linear-gradient(45deg, var(--aa-green-lighter) 20%, var(--aa-green) 50%, var(--arremaq-orange-lighter) 80%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; text-fill-color: transparent; }
+
+        .btn-iniciar { display: inline-flex; align-items: center; gap: 0.6em; font-family: var(--font-headings-cover); font-size: 0.975rem; font-weight: bold; padding: 0.6em 1.5em; background-image: linear-gradient(45deg, var(--aa-green-darker) 0%, var(--aa-green) 50%, var(--aa-green-darker) 100%); background-size: 200% auto; color: var(--aa-white); border: none; border-radius: 9999px; cursor: pointer; box-shadow: 0 4px 12px rgba(22, 176, 151, 0.3), 0 1.5px 3px -1.5px var(--aa-green-darker) inset; transition: all 0.4s ease-out; outline: none; margin-top: 1.2em; margin-bottom: 1.2em; text-transform: uppercase; letter-spacing: 0.07em; position: relative; overflow: hidden; }
+        .btn-iniciar:hover { background-position: right center; transform: scale(1.08) translateY(-3px); box-shadow: 0 6px 16px rgba(22, 176, 151, 0.4), 0 1.5px 3px -1.5px var(--aa-green) inset, 0 0 12px var(--aa-green-lighter); }
+        html[data-theme='dark'] .btn-iniciar { background-image: linear-gradient(45deg, var(--aa-green) 0%, var(--aa-green-lighter) 50%, var(--aa-green) 100%); color: var(--aa-dark-blue); box-shadow: 0 4px 12px rgba(22, 176, 151, 0.4), 0 1.5px 3px -1.5px var(--aa-green) inset; }
+        html[data-theme='dark'] .btn-iniciar:hover { color: var(--aa-dark-blue); box-shadow: 0 6px 16px rgba(22, 176, 151, 0.5), 0 1.5px 3px -1.5px var(--aa-green-darker) inset, 0 0 16px var(--aa-green); }
+        .btn-iniciar svg { width: 1.2em; height: 1.2em; transition: transform 0.4s ease; }
+        .btn-iniciar:hover svg { transform: rotate(15deg) scale(1.15) translateX(2.5px); }
+
+        .capa-social-links { margin-top: 1.2rem; display: flex; gap: 1rem; justify-content: center; align-items: center; }
+        .capa-social-links a {
+            color: var(--aa-white);
+            font-size: 1.1rem;
+            transition: all var(--transition-main);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-image: linear-gradient(45deg, var(--aa-green), var(--aa-green-darker));
+            box-shadow: var(--shadow-md);
+        }
+        .capa-social-links a:hover {
+            background-image: linear-gradient(45deg, var(--arremaq-orange), var(--arremaq-orange-darker));
+            transform: scale(1.15) rotate(-10deg);
+            box-shadow: var(--shadow-lg);
+        }
+        html[data-theme='dark'] .capa-social-links a {
+             background-image: linear-gradient(45deg, var(--aa-green-text-dark-theme), var(--aa-green));
+             color: var(--aa-dark-blue);
+        }
+        html[data-theme='dark'] .capa-social-links a:hover {
+            background-image: linear-gradient(45deg, var(--arremaq-orange-text-dark-theme), var(--arremaq-orange-darker));
+            color: var(--aa-white);
+        }
+
+        /* * =============================================
+         * Estilos da Seção de Menu Principal
+         * =============================================
+         */
+        .menu-principal-section { min-height: 100vh; padding: clamp(2rem, 8vw, 4rem) clamp(1rem, 5vw, 2rem); text-align: center; background-color: var(--bg-cards-section-light); }
+        html[data-theme='dark'] .menu-principal-section { background-color: var(--bg-cards-section-dark); }
+        .menu-principal-title { font-family: var(--font-headings-cover); font-size: clamp(1.5rem, 3.5vw, 2.2rem); font-weight: 800; color: var(--text-headings-light-portal); margin-bottom: 2.5rem; line-height: 1.3; text-transform: uppercase; }
+        html[data-theme='dark'] .menu-principal-title { color: var(--text-headings-dark-portal); }
+
+        .menu-card { background-color: var(--bg-content-light-portal); border-radius: var(--radius-xl); padding: 2rem 1.5rem; box-shadow: var(--shadow-lg); transition: all var(--transition-main); border: 1px solid var(--border-color-light-portal); display: flex; flex-direction: column; align-items: center; text-align: center; cursor: pointer; height: 100%; min-height: 280px; justify-content: center; }
+        .menu-card:hover { transform: translateY(-8px) scale(1.03); box-shadow: var(--shadow-xl); border-color: var(--aa-green); }
+        html[data-theme='dark'] .menu-card { background-color: var(--bg-content-dark-portal); border-color: var(--border-color-dark-portal); }
+        html[data-theme='dark'] .menu-card:hover { border-color: var(--aa-green-lighter); }
+
+        .menu-card-icon { font-size: 2.5rem; margin-bottom: 1rem; line-height: 1; }
+        .menu-card-title { font-family: var(--font-headings-cover); font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--text-headings-light-portal); line-height: 1.4; }
+        html[data-theme='dark'] .menu-card-title { color: var(--text-headings-dark-portal); }
+
+        /* * =============================================
+         * Estilos da Seção de Índice do Playbook (agora Trilha de Aprendizado)
+         * =============================================
+         */
+        .trilha-aprendizado-section { background-color: var(--bg-main-light); color: var(--text-body-light-portal); padding: clamp(2rem, 8vw, 4rem) clamp(1rem, 5vw, 2rem); min-height: 100vh; }
+        html[data-theme='dark'] .trilha-aprendizado-section { background-color: var(--bg-main-dark); color: var(--text-body-dark-portal); }
+        .trilha-aprendizado-main-title { font-family: var(--font-headings-portal); font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 800; color: var(--text-headings-light-portal); text-align: center; margin-bottom: 2rem; text-transform: uppercase; }
+        html[data-theme='dark'] .trilha-aprendizado-main-title { color: var(--text-headings-dark-portal); }
+
+        #trilhaIndexContainer .index-item-card { background-color: var(--bg-content-light-portal); border: 2px solid var(--border-color-light-portal); border-left: 5px solid var(--aa-green); border-radius: var(--radius-lg); padding: 1.5rem; box-shadow: var(--shadow-md); transition: all var(--transition-main); cursor: pointer; display: flex; flex-direction: column; align-items: center; text-align: center; min-height: 220px; justify-content: flex-start; }
+        #trilhaIndexContainer .index-item-card:hover { transform: translateY(-5px) scale(1.02); box-shadow: var(--shadow-xl); border-left-color: var(--arremaq-orange); border-color: var(--arremaq-orange); }
+        html[data-theme='dark'] #trilhaIndexContainer .index-item-card { background-color: var(--bg-content-dark-portal); border-color: var(--border-color-dark-portal); border-left-color: var(--aa-green-lighter); }
+        html[data-theme='dark'] .playbook-logo {
+            filter: drop-shadow(0 0.4rem 0.8rem rgba(0,0,0,0.3)); /* Mantém a sombra */
+        }
+        html[data-theme='dark'] #trilhaIndexContainer .index-item-card:hover { border-left-color: var(--arremaq-orange-lighter); border-color: var(--arremaq-orange-lighter); }
+
+        #trilhaIndexContainer .index-item-emoji { font-size: 2.2rem; margin-bottom: 1rem; line-height: 1; }
+        .emoji-autoarremate-color { color: var(--aa-green-darker) !important; }
+        html[data-theme='dark'] .emoji-autoarremate-color { color: var(--aa-green-text-dark-theme) !important; }
+        .emoji-arremaq-color { color: var(--arremaq-orange-darker) !important; }
+        html[data-theme='dark'] .emoji-arremaq-color { color: var(--arremaq-orange-text-dark-theme) !important; }
+
+        #trilhaIndexContainer .index-item-title { font-family: var(--font-headings-portal); font-weight: 700; font-size: 0.9rem; margin-bottom: 0.75rem; color: var(--text-headings-light-portal); line-height: 1.3; }
+        #trilhaIndexContainer .index-item-title strong { text-transform: uppercase; font-weight: 800; display: block; }
+        html[data-theme='dark'] #trilhaIndexContainer .index-item-title { color: var(--text-headings-dark-portal); }
+
+        #trilhaIndexContainer .index-item-sub { font-family: var(--font-primary-portal); font-size: 0.7rem; color: var(--text-muted-light-portal); line-height: 1.5; margin-top: auto; padding-top: 0.5rem; }
+        html[data-theme='dark'] #trilhaIndexContainer .index-item-sub { color: var(--text-muted-dark-portal); }
+        #trilhaIndexContainer .index-item-sub .sentence-emoji { margin-right: 0.3em; font-size: 1em; }
+        html[data-theme='dark'] #trilhaIndexContainer .index-item-sub .sentence-emoji { color: var(--aa-green-lighter); }
+
+        /* Estilos Gerais da Seção de Conteúdo (para seções linkadas dos índices) */
+        .playbook-sub-section { padding: clamp(2rem, 8vw, 4rem) clamp(1rem, 5vw, 2rem); min-height: 100vh; background-color: var(--bg-auto-arremate-light); color: var(--text-body-light-portal);}
+        html[data-theme='dark'] .playbook-sub-section { background-color: var(--bg-auto-arremate-dark); color: var(--text-body-dark-portal); }
+
+        /* Fundo e texto dinâmicos para subseções */
+        #pista-decolagem-section, #auto-arremate-content-section, #mapeando-campeoes-section, #arte-comunicacao-section, #dicionario-mestres-section, #evolucao-continua-section, #central-comando-section {
+            background-color: var(--bg-auto-arremate-light);
+            color: var(--text-body-light-portal);
+        }
+        html[data-theme='dark'] #pista-decolagem-section, html[data-theme='dark'] #auto-arremate-content-section, html[data-theme='dark'] #mapeando-campeoes-section, html[data-theme='dark'] #arte-comunicacao-section, html[data-theme='dark'] #dicionario-mestres-section, html[data-theme='dark'] #evolucao-continua-section, html[data-theme='dark'] #central-comando-section {
+            background-color: var(--bg-auto-arremate-dark);
+            color: var(--text-body-dark-portal);
+        }
+
+        .playbook-content-title { font-family: var(--font-headings-portal); font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 800; color: var(--text-headings-light-portal); text-align: center; margin-bottom: 2rem; text-transform: uppercase; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); }
+        html[data-theme='dark'] .playbook-content-title { color: var(--text-headings-dark-portal); }
+        .playbook-content-title .emoji { font-size: 1.1em; margin-right: 0.6rem; color: var(--aa-green); }
+        html[data-theme='dark'] .playbook-content-title .emoji { color: var(--aa-green-lighter); }
+        .title-autoarremate { color: var(--aa-green-darker); }
+        html[data-theme='dark'] .title-autoarremate { color: var(--aa-green-text-dark-theme); }
+
+        /* Estilo para os cards de conteúdo */
+        .content-card {
+            background-color: var(--bg-content-light-portal);
+            border-radius: var(--radius-xl);
+            padding: 2rem;
+            box-shadow: var(--shadow-lg);
+            transition: all var(--transition-main);
+            border: 1px solid var(--border-color-light-portal);
+            margin-bottom: 2.5rem; /* Espaçamento entre os cards */
+        }
+        html[data-theme='dark'] .content-card {
+            background-color: var(--bg-content-dark-portal);
+            border-color: var(--border-color-dark-portal);
+        }
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+        .content-card-title {
+            font-family: var(--font-headings-portal);
+            font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+            font-weight: 700;
+            color: var(--text-headings-light-portal);
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            text-align: center;
+            text-transform: uppercase; /* Todos os títulos em maiúsculas */
+        }
+        html[data-theme='dark'] .content-card-title {
+            color: var(--text-headings-dark-portal);
+        }
+        .content-card-title .emoji {
+            margin-right: 0.5rem;
+            color: var(--aa-green);
+            border-radius: 50%; /* Emojis redondos */
+            padding: 0.2em; /* Espaçamento para o fundo redondo */
+        }
+        html[data-theme='dark'] .content-card-title .emoji {
+            color: var(--aa-green-lighter);
+        }
+        /* Emojis no início de frases, estilização para cantos arredondados */
+        .text-content-container .emoji-in-text {
+            display: inline-block;
+            margin-right: 0.5em;
+            vertical-align: middle;
+            border-radius: 50%;
+            padding: 0.1em 0.2em; /* Ajuste para o emoji caber na bolha */
+            background-color: rgba(var(--aa-green-lighter), 0.2); /* Cor de fundo suave */
+        }
+        html[data-theme='dark'] .text-content-container .emoji-in-text {
+            background-color: rgba(var(--aa-green-darkest), 0.4);
+        }
+
+
+        .playbook-section-title { font-family: var(--font-headings-portal); font-size: clamp(1.3rem, 2.5vw, 1.8rem); font-weight: 700; color: var(--text-headings-light-portal); margin-top: 2.5rem; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: center; gap: 0.75rem; text-align: center; }
+        html[data-theme='dark'] .playbook-section-title { color: var(--text-headings-dark-portal); }
+        .playbook-section-title .emoji { margin-right: 0.5rem; color: var(--aa-green); }
+        html[data-theme='dark'] .playbook-section-title .emoji { color: var(--aa-green-lighter); }
+
+        .text-content-container p { margin-bottom: 1.25rem; line-height: 1.8; font-size: 1rem; color: var(--text-body-light-portal); }
+        html[data-theme='dark'] .text-content-container p { color: var(--text-body-dark-portal); }
+        .playbook-text p { font-size: 0.85rem; line-height: 1.8; margin-bottom: 1rem; }
+        .playbook-text .sentence-emoji { margin-right: 0.3em; font-size: 1em; }
+
+        /* Elementos específicos dentro do conteúdo */
+        .highlight { background-color: #f0fdfa; border-left: 8px solid var(--aa-green); padding: 2rem; border-radius: 0 var(--radius-xl) var(--radius-xl) 0; margin: 2.5rem 0; box-shadow: var(--shadow-lg); }
+        html[data-theme='dark'] .highlight { background-color: #112a2f; border-color: var(--aa-green-lighter); }
+        .highlight p { color: #0f5132; font-size: 1.1rem; line-height: 1.7; }
+        html[data-theme='dark'] .highlight p { color: var(--aa-green-lighter); }
+        .highlight strong { display: block; font-size: 1.5rem; margin-bottom: 1rem; color: var(--aa-green-darker); }
+        html[data-theme='dark'] .highlight strong { color: var(--aa-green-text-dark-theme); }
+        .brand-logo { max-height: 60px; margin: 1.5rem auto; display: block; }
+        html[data-theme='dark'] .brand-logo { filter: brightness(0) invert(1); }
+
+        /* Estilos para os cartões "Valores" (Pista de Decolagem) */
+        .valor-card {
+            background-color: var(--bg-content-light-portal);
+            border-radius: var(--radius-2xl);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: var(--shadow-lg);
+            transition: transform var(--transition-main), box-shadow var(--transition-main);
+            border-top: 4px solid var(--aa-green);
+        }
+        .valor-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-xl);
+        }
+        html[data-theme='dark'] .valor-card {
+            background-color: var(--bg-content-dark-portal);
+            border-color: var(--aa-green-darker);
+        }
+        .valor-card-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            line-height: 1;
+        }
+        .valor-card-title {
+            font-family: var(--font-headings-portal);
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-headings-light-portal);
+            margin-bottom: 0.5rem;
+        }
+        html[data-theme='dark'] .valor-card-title {
+             color: var(--text-headings-dark-portal);
+        }
+        .valor-card-text {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: var(--text-body-light-portal);
+        }
+        html[data-theme='dark'] .valor-card-text {
+             color: var(--text-body-dark-portal);
+        }
+
+        /* Estilos de Cartão (PDGC & Superpoder - Auto Arremate) */
+        .pdgc-card, .superpower-card {
+            background-color: var(--bg-content-light-portal);
+            border: 1px solid var(--border-color-light-portal);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-md);
+            transition: all var(--transition-main);
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+        }
+        html[data-theme='dark'] .pdgc-card,
+        html[data-theme='dark'] .superpower-card {
+            background-color: var(--bg-content-dark-portal);
+            border-color: var(--border-color-dark-portal);
+        }
+        .pdgc-card:hover, .superpower-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--aa-green);
+        }
+        html[data-theme='dark'] .pdgc-card:hover,
+        html[data-theme='dark'] .superpower-card:hover {
+            border-color: var(--aa-green-lighter);
+        }
+
+        .pdgc-emoji, .superpower-emoji {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            color: var(--aa-green);
+            line-height: 1;
+        }
+        html[data-theme='dark'] .pdgc-emoji,
+        html[data-theme='dark'] .superpower-emoji {
+            color: var(--aa-green-lighter);
+        }
+
+        .pdgc-title, .superpower-title {
+            font-family: var(--font-headings-portal);
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-headings-light-portal);
+            line-height: 1.4;
+        }
+         html[data-theme='dark'] .pdgc-title,
+         html[data-theme='dark'] .superpower-title {
+            color: var(--text-headings-dark-portal);
+        }
+
+        .pdgc-description, .superpower-description {
+            font-size: 0.78rem;
+            line-height: 1.6;
+            color: var(--text-body-light-portal);
+            margin-top: auto; /* Pushes description to bottom if card height varies */
+        }
+        html[data-theme='dark'] .pdgc-description,
+        html[data-theme='dark'] .superpower-description {
+            color: var(--text-body-dark-portal);
+        }
+
+        /* Estilo da Caixa de Destaque (Auto Arremate) */
+        .highlight-blue { /* Renamed from .highlight to avoid conflict */
+            background-color: #f0f9ff;
+            border-left: 8px solid #3b82f6;
+            border-radius: 0 var(--radius-xl) var(--radius-xl) 0;
+            padding: 2rem;
+            box-shadow: var(--shadow-xl);
+            margin-top: 2.5rem;
+        }
+        html[data-theme='dark'] .highlight-blue {
+            background-color: #1e3a8a;
+            border-left-color: #60a5fa;
+        }
+        .highlight-blue p {
+             color: #1e3a8a;
+        }
+        html[data-theme='dark'] .highlight-blue p {
+            color: #dbeafe;
+        }
+
+        /* Estilos de Cartão de Super Poder (Arremaq) */
+        .super-power-card {
+            background-color: var(--bg-content-light-portal);
+            border: 1px solid var(--border-color-light-portal);
+            border-radius: var(--radius-xl);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            box-shadow: var(--shadow-md);
+            transition: all var(--transition-main);
+            height: 100%;
+        }
+        .super-power-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--arremaq-orange);
+        }
+        html[data-theme='dark'] .super-power-card {
+             background-color: var(--bg-content-dark-portal);
+             border-color: var(--border-color-dark-arremaq); /* Usa borda da ARREMAQ */
+        }
+         html[data-theme='dark'] .super-power-card:hover {
+             border-color: var(--arremaq-orange-text-dark-theme);
+         }
+        .super-power-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--arremaq-orange); /* Ícone da ARREMAQ */
+            line-height: 1;
+        }
+        .super-power-title {
+            font-family: var(--font-headings-portal);
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-headings-light-portal); /* Título padrão */
+        }
+        html[data-theme='dark'] .super-power-title {
+             color: var(--text-headings-dark-arremaq); /* Título da ARREMAQ */
+        }
+        .super-power-text {
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* Estilo da Caixa de Destaque (Arremaq) */
+        .highlight-box-arremaq {
+            background-image: linear-gradient(45deg, var(--arremaq-orange-pastel), var(--arremaq-orange-lighter));
+            border-radius: var(--radius-xl);
+            padding: 2.5rem;
+            margin-top: 3rem;
+            text-align: center;
+            box-shadow: var(--shadow-lg);
+            border: 2px solid var(--arremaq-orange-darker);
+        }
+        html[data-theme='dark'] .highlight-box-arremaq {
+            background-image: linear-gradient(45deg, var(--arremaq-orange-darkest), #4b2a00);
+            border-color: var(--arremaq-orange-text-dark-theme);
+        }
+        .highlight-box-arremaq .highlight-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--arremaq-orange-darker);
+        }
+        html[data-theme='dark'] .highlight-box-arremaq .highlight-icon {
+            color: var(--arremaq-orange-text-dark-theme);
+        }
+        .highlight-box-arremaq .highlight-title {
+            font-family: var(--font-headings-portal);
+            font-size: 1.75rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--arremaq-orange-darkest);
+        }
+        html[data-theme='dark'] .highlight-box-arremaq .highlight-title {
+            color: var(--arremaq-orange-lighter);
+        }
+        .highlight-box-arremaq .highlight-text {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--arremaq-orange-darkest);
+            text-align: left;
+            max-width: 70ch;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        html[data-theme='dark'] .highlight-box-arremaq .highlight-text {
+            color: var(--arremaq-orange-lighter);
+        }
+
+        /* Título Arremaq */
+        .title-arremaq { color: var(--arremaq-orange-darker); }
+        html[data-theme='dark'] .title-arremaq { color: var(--arremaq-orange-text-dark-theme); }
+        
+        /* NOVOS ESTILOS - Persona Card */
+        .persona-card {
+            background-color: var(--bg-content-light-portal);
+            border-radius: var(--radius-xl);
+            padding: 2rem 1.5rem;
+            box-shadow: var(--shadow-md);
+            transition: all var(--transition-main);
+            border: 1px solid var(--border-color-light-portal);
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+        html[data-theme='dark'] .persona-card {
+            background-color: var(--bg-content-dark-portal);
+            border-color: var(--border-color-dark-portal);
+        }
+        .persona-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--aa-green);
+        }
+        html[data-theme='dark'] .persona-card:hover {
+            border-color: var(--aa-green-lighter);
+        }
+        .persona-card img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem auto;
+            border: 4px solid var(--aa-green-lighter);
+            object-fit: cover;
+        }
+        html[data-theme='dark'] .persona-card img {
+            border-color: var(--aa-dark-blue-lighter);
+        }
+        .persona-card .persona-name {
+            font-family: var(--font-headings-portal);
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text-headings-light-portal);
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+        html[data-theme='dark'] .persona-card .persona-name {
+            color: var(--text-headings-dark-portal);
+        }
+        .persona-card .persona-focus {
+            font-family: var(--font-primary-portal);
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-muted-light-portal);
+            text-align: center;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+        }
+        html[data-theme='dark'] .persona-card .persona-focus {
+            color: var(--text-muted-dark-portal);
+        }
+        .persona-card .persona-description {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        .persona-card .persona-section-title {
+            font-family: var(--font-headings-portal);
+            font-weight: 700;
+            font-size: 1rem;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-headings-light-portal);
+        }
+        html[data-theme='dark'] .persona-card .persona-section-title {
+            color: var(--text-headings-dark-portal);
+        }
+        .persona-card ul {
+            list-style: none;
+            padding-left: 0;
+            font-size: 0.85rem;
+        }
+        .persona-card ul li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.2rem;
+            position: relative;
+        }
+        .persona-card ul li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5em;
+            transform: translateY(-50%);
+            width: 0.8rem;
+            height: 0.8rem;
+            background-color: transparent;
+            border: 2px solid var(--aa-green);
+            border-radius: 50%;
+        }
+        .persona-card .persona-arguments {
+            font-size: 0.85rem;
+            font-style: italic;
+            margin-top: 0.5rem;
+            padding: 0.75rem;
+            background-color: var(--aa-green-pastel);
+            border-radius: var(--radius-md);
+        }
+        html[data-theme='dark'] .persona-card .persona-arguments {
+             background-color: #112a2f;
+             color: var(--aa-green-lighter);
+        }
+
+        .cnae-list li {
+            background-color: var(--bg-content-light-portal);
+            border: 1px solid var(--border-color-light-portal);
+            border-left: 4px solid var(--aa-green);
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: var(--radius-md);
+            font-size: 0.9rem;
+            transition: all var(--transition-main);
+        }
+        .cnae-list li:hover {
+            transform: translateX(5px);
+            border-left-color: var(--arremaq-orange);
+        }
+        html[data-theme='dark'] .cnae-list li {
+            background-color: var(--bg-content-dark-portal);
+            border-color: var(--border-color-dark-portal);
+            border-left-color: var(--aa-green-lighter);
+        }
+         html[data-theme='dark'] .cnae-list li:hover {
+            border-left-color: var(--arremaq-orange-text-dark-theme);
+        }
+
+        /* Utilitário & Estilos de Botão de Navegação */
+        .btn-voltar-secao { display: inline-flex; align-items: center; font-family: var(--font-headings-cover); font-weight: 600; padding: 0.6rem 1.2rem; border-radius: var(--radius-button-portal); text-decoration: none; transition: all var(--transition-main); border: 2px solid var(--aa-green); background-color: transparent; color: var(--aa-green-darker); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2rem; }
+        .btn-voltar-secao:hover { background-color: var(--aa-green-lighter); border-color: var(--aa-green-darker); transform: translateY(-2px); color: var(--aa-green-darker); }
+        html[data-theme='dark'] .btn-voltar-secao { border-color: var(--aa-green-lighter); color: var(--aa-green-lighter); }
+        html[data-theme='dark'] .btn-voltar-secao:hover { background-color: var(--aa-green-darker); border-color: var(--aa-green-lighter); color: var(--aa-white); }
+        .btn-voltar-secao i { margin-right: 0.5rem; }
+
+        .navigation-buttons { display: flex; justify-content: space-between; margin-top: 3rem; }
+        .btn-nav { padding: 0.7rem 1.5rem; border-radius: var(--radius-lg); font-weight: 700; transition: all var(--transition-main); border: 2px solid transparent; text-transform: uppercase; box-shadow: var(--shadow-sm); font-size: 0.8rem; cursor: pointer; }
+        .btn-nav:hover{ box-shadow: var(--shadow-md); transform: translateY(-2px); }
+        .btn-nav.prev { background-color: var(--aa-medium-gray); color: var(--aa-white); border-color: var(--aa-dark-blue); }
+        .btn-nav.prev:hover { background-color: var(--aa-dark-blue); }
+        html[data-theme='dark'] .btn-nav.prev { background-color: var(--aa-medium-gray); color: var(--bg-main-dark); border-color: var(--aa-green-lighter); }
+        html[data-theme='dark'] .btn-nav.prev:hover { background-color: var(--aa-green-lighter); color: var(--aa-dark-blue); }
+        .btn-nav.next { background-color: var(--aa-green); color: var(--aa-white); border-color: var(--aa-green-darker); }
+        .btn-nav.next:hover { background-color: var(--aa-green-darker); }
+        html[data-theme='dark'] .btn-nav.next { background-color: var(--arremaq-orange-text-dark-theme); color: var(--aa-dark-blue); border-color: var(--arremaq-orange); }
+        html[data-theme='dark'] .btn-nav.next:hover { background-color: var(--arremaq-orange); color: var(--aa-white); }
+        .btn-nav:disabled { background-color: #e2e8f0; color: #94a3b8; cursor: not-allowed; opacity: 0.7; border-color: #cbd5e1; }
+        html[data-theme='dark'] .btn-nav:disabled { background-color: #334155; color: #64748b; border-color: #475569; }
+
+        /* * =============================================
+         * Estilos de Acessibilidade e Alternador de Tema
+         * =============================================
+         */
+        .theme-toggle-button { position: fixed; bottom: 20px; right: 20px; background-image: linear-gradient(45deg, var(--aa-dark-blue), #2c3e50); color: var(--aa-white); border: 1px solid var(--border-color-dark-portal); border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; cursor: pointer; box-shadow: var(--shadow-lg); z-index: 1000; transition: all var(--transition-main); }
+        .theme-toggle-button:hover { transform: scale(1.1); color: var(--aa-green-lighter); box-shadow: 0 0 15px var(--aa-green-lighter); }
+        html[data-theme='dark'] .theme-toggle-button { background-image: linear-gradient(45deg, var(--aa-green-lighter), var(--aa-green)); color: var(--aa-dark-blue); }
+        /* A cor do hover do botão de tema na Arremaq era laranja, então vou adicionar um ajuste para isso, mas manter o padrão do verde para o portal principal. Se o contexto do botão mudar, isso precisaria ser mais dinâmico. */
+        html[data-theme='dark'] .theme-toggle-button:hover[data-arremaq-theme="true"] {
+            color: var(--arremaq-orange-lighter);
+            box-shadow: 0 0 15px var(--arremaq-orange-lighter);
+        }
+
+        .accessibility-controls { position: fixed; top: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 1001; }
+        .accessibility-btn { background-color: var(--bg-content-light-portal); color: var(--text-headings-light-portal); border: 1px solid var(--border-color-light-portal); border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; cursor: pointer; box-shadow: var(--shadow-md); transition: all var(--transition-main); background-image: linear-gradient(45deg, white, #e5e7eb); }
+        .accessibility-btn:hover { transform: scale(1.1); color: var(--aa-green); box-shadow: var(--shadow-lg); }
+        html[data-theme='dark'] .accessibility-btn { background-image: linear-gradient(45deg, #475569, #334155); color: var(--text-headings-dark-portal); border-color: var(--border-color-dark-portal); }
+        html[data-theme='dark'] .accessibility-btn:hover { color: var(--aa-green-lighter); }
+
+        /* Estilos da Barra de Progresso */
+        .progress-bar-container {
+            width: 90%;
+            max-width: 800px;
+            margin: 2rem auto;
+            background-color: #e0e0e0;
+            border-radius: 9999px;
+            height: 1.2rem;
+            overflow: hidden;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
+        }
+        html[data-theme='dark'] .progress-bar-container {
+            background-color: #334155;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background-color: var(--aa-green);
+            border-radius: 9999px;
+            transition: width 0.5s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.75rem;
+        }
+        html[data-theme='dark'] .progress-bar-fill {
+            background-color: var(--aa-green-lighter);
+            color: var(--aa-dark-blue);
+        }
+        .progress-bar-label {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            line-height: 1.2rem;
+            color: var(--aa-dark-blue);
+            font-weight: bold;
+            font-size: 0.75rem;
+        }
+        html[data-theme='dark'] .progress-bar-label {
+            color: var(--aa-white);
+        }
+
+        /* Dicionário - Cards de Letras */
+        .alphabet-card {
+            background-color: var(--bg-content-light-portal);
+            border-radius: var(--radius-xl);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-md);
+            transition: all var(--transition-main);
+            border: 1px solid var(--border-color-light-portal);
+            text-align: center;
+            cursor: pointer;
+        }
+        html[data-theme='dark'] .alphabet-card {
+            background-color: var(--bg-content-dark-portal);
+            border-color: var(--border-color-dark-portal);
+        }
+        .alphabet-card:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--aa-green);
+        }
+        html[data-theme='dark'] .alphabet-card:hover {
+            border-color: var(--aa-green-lighter);
+        }
+        .alphabet-letter {
+            font-family: var(--font-headings-portal);
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--aa-dark-blue);
+            margin-bottom: 0.5rem;
+        }
+        html[data-theme='dark'] .alphabet-letter {
+            color: var(--aa-green-lighter);
+        }
+        .alphabet-count {
+            font-size: 0.8rem;
+            color: var(--text-muted-light-portal);
+        }
+        html[data-theme='dark'] .alphabet-count {
+            color: var(--text-muted-dark-portal);
+        }
+        .dictionary-term-card {
+            background-color: var(--bg-cards-section-light);
+            border-left: 5px solid var(--aa-green);
+            border-radius: var(--radius-md);
+            padding: 1rem 1.5rem;
+            margin-bottom: 0.75rem;
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition-main);
+        }
+        html[data-theme='dark'] .dictionary-term-card {
+            background-color: var(--bg-cards-section-dark);
+            border-left-color: var(--aa-green-lighter);
+        }
+        .dictionary-term-card:hover {
+            transform: translateX(5px);
+            box-shadow: var(--shadow-md);
+        }
+        .dictionary-term-title {
+            font-family: var(--font-headings-portal);
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--text-headings-light-portal);
+            margin-bottom: 0.25rem;
+            text-transform: uppercase;
+        }
+        html[data-theme='dark'] .dictionary-term-title {
+            color: var(--text-headings-dark-portal);
+        }
+        .dictionary-term-description {
+            font-size: 0.85rem;
+            color: var(--text-body-light-portal);
+            line-height: 1.6;
+        }
+        html[data-theme='dark'] .dictionary-term-description {
+            color: var(--text-body-dark-portal);
+        }
+        .dictionary-term-emoji {
+            margin-right: 0.5rem;
+            border-radius: 50%;
+            padding: 0.1em 0.2em;
+            background-color: rgba(var(--aa-green-lighter), 0.2);
+        }
+        html[data-theme='dark'] .dictionary-term-emoji {
+            background-color: rgba(var(--aa-green-darkest), 0.4);
+        }
+
+        /* Modal para Certificado */
+        .modal {
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+        }
+        .modal.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background-color: var(--bg-content-light-portal);
+            padding: 2.5rem;
+            border-radius: var(--radius-xl);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            max-width: 90%;
+            width: 700px;
+            text-align: center;
+            position: relative;
+            transform: scale(0.9);
+            transition: transform 0.3s ease-in-out;
+        }
+        .modal.show .modal-content {
+            transform: scale(1);
+        }
+        html[data-theme='dark'] .modal-content {
+            background-color: var(--bg-content-dark-portal);
+        }
+        .close-button {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.8rem;
+            color: var(--text-muted-light-portal);
+            cursor: pointer;
+            transition: color 0.2s ease-in-out;
+        }
+        .close-button:hover {
+            color: var(--aa-dark-blue);
+        }
+        html[data-theme='dark'] .close-button:hover {
+            color: var(--aa-green-lighter);
+        }
+        .certificate-image {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 1.5rem;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-md);
+        }
+        .certificate-title {
+            font-family: var(--font-headings-portal);
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--aa-green-darker);
+            margin-bottom: 1rem;
+        }
+        html[data-theme='dark'] .certificate-title {
+            color: var(--aa-green-text-dark-theme);
+        }
+        .certificate-text {
+            font-size: 1rem;
+            color: var(--text-body-light-portal);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+        html[data-theme='dark'] .certificate-text {
+            color: var(--text-body-dark-portal);
+        }
+        .certificate-score {
+            font-family: var(--font-headings-portal);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--arremaq-orange-darker);
+            margin-bottom: 1rem;
+        }
+        html[data-theme='dark'] .certificate-score {
+            color: var(--arremaq-orange-text-dark-theme);
+        }
+        
+        /* * =============================================
+         * Design Responsivo
+         * =============================================
+         */
+        @media (max-width: 1024px) {
+            .menu-principal-section .grid-cols-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            #trilhaIndexContainer.grid-cols-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .dictionary-alphabet-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+        }
+        @media (max-width: 768px) {
+            html { font-size: 84%; }
+            .capa-title { font-size: clamp(1.0rem, 2.2vw, 1.3rem); }
+            .frase-destaque { font-size: clamp(0.6rem, 1.3vw, 0.8rem); max-width: 95%;}
+            .playbook-logo { width: 148px; }
+            .accessibility-controls { top: 10px; right: 10px; gap: 8px;}
+            .accessibility-btn { width: 40px; height: 40px; font-size: 1.1rem;}
+            .menu-principal-title { font-size: clamp(1.1rem, 2.8vw, 1.7rem); }
+            .menu-card { padding: 1.5rem 1rem; min-height: 240px; }
+            .trilha-aprendizado-main-title, .playbook-content-title { font-size: clamp(1.2rem, 2.8vw, 1.7rem); }
+            #trilhaIndexContainer.grid-cols-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            #trilhaIndexContainer .index-item-card { min-height: 180px; }
+            .playbook-section-title { font-size: clamp(1.1rem, 2.2vw, 1.5rem); }
+            .text-content-container p, .playbook-text p { font-size: 0.9rem; }
+            .content-card { padding: 1.5rem; }
+            .content-card-title { font-size: clamp(1.1rem, 2.2vw, 1.5rem); }
+            .dictionary-alphabet-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+            .dictionary-term-card { padding: 0.75rem 1rem; }
+            .dictionary-term-title { font-size: 0.9rem; }
+            .dictionary-term-description { font-size: 0.75rem; }
+        }
+        @media (max-width: 640px) {
+             .menu-principal-section .grid-cols-4, .menu-principal-section .grid-cols-2 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+             #trilhaIndexContainer.grid-cols-4, #trilhaIndexContainer.grid-cols-2, #trilhaIndexContainer.grid-cols-3 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+             .personas-grid { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+             .dictionary-alphabet-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        }
+        @media (max-width: 480px) {
+            html { font-size: 77%; }
+            .playbook-logo { width: 116px; }
+            .btn-iniciar { font-size: 0.7rem; padding: 0.5em 1.1em; }
+            .capa-title { font-size: clamp(0.9rem, 2.5vw, 1.2rem); line-height: 1.5;}
+            .frase-destaque { font-size: clamp(0.6rem, 1.2vw, 0.75rem); }
+            .menu-principal-title { font-size: clamp(1rem, 2.8vw, 1.5rem); }
+            .trilha-aprendizado-main-title, .playbook-content-title { font-size: clamp(1.1rem, 2.8vw, 1.5rem); }
+            .menu-card { min-height: 200px; }
+            .text-content-container p, .playbook-text p { font-size: 0.85rem; }
+            .progress-bar-container { width: 95%; }
+            .modal-content { padding: 1.5rem; }
+            .certificate-title { font-size: 1.5rem; }
+            .certificate-score { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="accessibility-controls">
+        <button id="increaseFontBtn" class="accessibility-btn" aria-label="Aumentar tamanho da fonte" title="Aumentar Fonte">
+            <i class="fas fa-search-plus"></i>
+        </button>
+        <button id="decreaseFontBtn" class="accessibility-btn" aria-label="Diminuir tamanho da fonte" title="Diminuir Fonte">
+            <i class="fas fa-search-minus"></i>
+        </button>
+        <button id="readPageBtn" class="accessibility-btn" aria-label="Ler página em voz alta" title="Ler Página">
+            <i class="fas fa-volume-up"></i>
+        </button>
+    </div>
+
+    <main id="main-portal-completo">
+        <section id="capa-section" class="capa-section" data-aos="fade-in" data-aos-duration="1000">
+            <div class="logos-container">
+                <img src="https://www.autoarremate.com.br/wp-content/uploads/2022/09/logo-horizontal-padrao.svg" alt="Logotipo da Auto Arremate" class="playbook-logo" data-aos="zoom-in" data-aos-delay="200" onerror="this.onerror=null; this.src='https://placehold.co/192x54/ffffff/16B097?text=Auto+Arremate&font=manrope'; this.alt='Logotipo Auto Arremate Indisponível';">
+                <img src="https://www.arremaq.com.br/wp-content/uploads/2021/01/Logotipo-Arremaqsuperbid.png" alt="Logotipo da Arremaq" class="playbook-logo" data-aos="zoom-in" data-aos-delay="300" onerror="this.onerror=null; this.src='https://placehold.co/192x54/ffffff/FF8C00?text=Arremaq&font=manrope'; this.alt='Logotipo Arremaq Indisponível';">
+            </div>
+            <h1 class="capa-title fun-title-effect" data-aos="fade-up" data-aos-delay="400">
+                <span class="capa-title-line"><span class="emoji-original-color">🎓</span> TRILHA DE APRENDIZADO <span class="emoji-original-color">🚀</span></span>
+                <span class="capa-title-line"><span class="emoji-original-color">⚡</span> SEU GUIA RELÂMPAGO <span class="emoji-original-color">💡</span></span>
+                <span class="capa-title-line"><span class="emoji-original-color">🎯</span> PARA UMA PERFORMANCE CAMPEÃ <span class="emoji-original-color">🏁</span></span>
+                <span class="capa-title-line"><span class="emoji-original-color">🏆</span> NA <span class="text-aa-green-darker">AUTO ARREMATE</span> E <span class="text-arremaq-orange-darker">ARREMAQ</span> <span class="emoji-original-color">🏅</span></span>
+            </h1>
+            <p class="frase-destaque frase-destaque-verde fun-frase-effect" data-aos="fade-up" data-aos-delay="600">
+                <span class="emoji">🚀</span> SÓ OS FORTES ACELERAM, MAS APENAS OS SÁBIOS DOMINAM A ARTE DE FREAR! <span class="emoji">🛑</span>
+            </p>
+            <p class="capa-criado" data-aos="fade-up" data-aos-delay="900"> <span class="emoji">✨</span> CRIADO PELO <span class="emoji">👨‍💻</span> ANALISTA DE OPERAÇÕES - <strong class="creator-name">MARCELO DO NASCIMENTO</strong> <span class="emoji">🚀</span>
+            </p>
+            <button id="btnIniciarCapa" class="btn-iniciar" data-aos="fade-up" data-aos-delay="1000"> EMBARCAR NESSA TRILHA ÉPICA!
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width: 1.2em; height: 1.2em;"><path stroke-linecap="round" stroke-linejoin="round" d="M12.75 15l3-3m0 0l-3-3m3 3h-7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            </button>
+            <div class="capa-social-links" data-aos="fade-up" data-aos-delay="1100">
+                 <a href="https://facebook.com/auto-arremate" target="_blank" aria-label="Facebook Auto Arremate"><i class="fab fa-facebook-f"></i></a>
+                 <a href="https://www.autoarremate.com.br/podcast-dirigindo-vendas/" target="_blank" aria-label="Podcast Dirigindo Vendas" title="Podcast Dirigindo Vendas"><i class="fas fa-podcast"></i></a>
+                 <a href="https://www.instagram.com/autoarremate/" target="_blank" aria-label="Instagram Auto Arremate"><i class="fab fa-instagram"></i></a>
+                 <a href="https://www.linkedin.com/company/autoarremate/" target="_blank" aria-label="LinkedIn Auto Arremate"><i class="fab fa-linkedin-in"></i></a>
+                 <a href="https://wa.me/5511940366065" target="_blank" aria-label="WhatsApp Auto Arremate"><i class="fab fa-whatsapp"></i></a>
+                 <a href="tel:01640421197" aria-label="Telefone Auto Arremate"><i class="fas fa-phone"></i></a>
+            </div>
+        </section>
+
+        <section id="menu-principal-section" class="menu-principal-section hidden" data-aos="fade-in">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="menu-principal-title" data-aos="fade-down">
+                     <span class="emoji-original-color">🚦</span> CENTRAL DE COMANDO <span class="text-aa-green-darker">AUTO ARREMATE</span> & <span class="text-arremaq-orange-darker">ARREMAQ</span> <span class="emoji-original-color">🛠️</span>
+                </h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 mt-10 md:mt-12">
+                    <div id="openTrilhaAprendizadoBtn" class="menu-card" data-aos="fade-up" data-aos-delay="100">
+                        <span class="menu-card-icon"><i class="fas fa-book-open text-gray-600 dark:text-gray-400"></i></span>
+                        <h3 class="menu-card-title">
+                            <span class="emoji-original-color">🎓</span> TRILHA DE APRENDIZADO: SEU CAMINHO PARA O SUCESSO! <span class="emoji-original-color">🚀</span>
+                        </h3>
+                    </div>
+                    <div class="menu-card" data-aos="fade-up" data-aos-delay="300">
+                        <span class="menu-card-icon"><i class="fas fa-palette text-purple-500 dark:text-purple-400"></i></span>
+                        <h3 class="menu-card-title">
+                           <span class="text-aa-green-darker">🎨</span> BOX DA IDENTIDADE <span class="text-aa-green-darker">AUTO ARREMATE</span>
+                        </h3>
+                    </div>
+                    <div class="menu-card" data-aos="fade-up" data-aos-delay="400">
+                        <span class="menu-card-icon"><i class="fas fa-graduation-cap text-red-500 dark:text-red-400"></i></span>
+                        <h3 class="menu-card-title">
+                           <span class="emoji-original-color">⛽</span> ACADEMIA DE REPASSADORES 3.0
+                        </h3>
+                    </div>
+                </div>
+                <button id="backToCoverBtnMenu" class="btn-voltar-secao mt-12 mx-auto">
+                    <i class="fas fa-arrow-left"></i> VOLTAR À CAPA
+                </button>
+            </div>
+        </section>
+
+        <section id="trilha-aprendizado-section" class="trilha-aprendizado-section hidden" data-aos="fade-in">
+            <div class="container mx-auto">
+                 <button class="btn-voltar-secao backToMenuPrincipalBtn mb-8 text-sm">
+                    <i class="fas fa-arrow-left mr-2"></i> VOLTAR AO MENU PRINCIPAL
+                </button>
+                <h2 class="trilha-aprendizado-main-title">
+                     <span class="emoji-original-color">🎓</span> TRILHA DE APRENDIZADO: GUIA ESTRATÉGICO <span class="emoji-original-color">🏆</span>
+                </h2>
+
+                <!-- Barra de Progresso -->
+                <div class="progress-bar-container relative">
+                    <div id="progressBarFill" class="progress-bar-fill" style="width: 0%;">
+                        <span id="progressBarLabel" class="absolute">0% COMPLETO</span>
+                    </div>
+                </div>
+                
+                <div id="trilhaIndexContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 py-6">
+                    </div>
+            </div>
+        </section>
+
+        <section id="pista-decolagem-section" class="playbook-sub-section hidden">
+            <div class="container mx-auto px-4">
+                <button class="btn-voltar-secao backToTrilhaAprendizadoBtn mb-8 text-sm">
+                    <i class="fas fa-arrow-left mr-2"></i> VOLTAR À TRILHA
+                </button>
+                <h1 class="playbook-content-title text-center" data-aos="fade-down"><span class="emoji-original-color">🚀</span><strong>NOSSA PISTA DE DECOLAGEM: HISTÓRIA, VALORES E A FORÇA DA EQUIPE <span class="text-aa-green-darker">AUTO ARREMATE</span> & <span class="text-arremaq-orange-darker">ARREMAQ</span>!</strong></h1>
+
+                <div class="text-content-container space-y-10 mt-8">
+                    <div class="content-card" data-aos="fade-up">
+                        <h2 class="content-card-title"><span class="emoji-in-text">🧭</span> A NASCENTE DA NOSSA JORNADA</h2>
+                        <p><span class="emoji-in-text">🌟</span> BEM-VINDO(A) AO CORAÇÃO DA AUTO ARREMATE & ARREMAQ, NOBRE PILOTO! <span class="emoji-in-text">🏎️</span> AQUI, CADA LINHA DE CÓDIGO E CADA ESTRATÉGIA SÃO IMPULSIONADAS POR UM PROPÓSITO MAIOR: REVOLUCIONAR A FORMA COMO O MERCADO ACELERA SEUS NEGÓCIOS. <span class="emoji-in-text">🛠️</span> SOMOS MAIS QUE UMA PLATAFORMA; SOMOS O SEU COPILOTO NA JORNADA RUMO À MÁXIMA PERFORMANCE, EQUIPADOS COM A MAIS ALTA TECNOLOGIA E UMA PAIXÃO CONTAGIOSA POR INOVAÇÃO. <span class="emoji-in-text">🚦</span> NOSSA CULTURA É UM PIT STOP DE IDEIAS BRILHANTES, ONDE A COLABORAÇÃO E A BUSCA INCESSANTE PELA EXCELÊNCIA ABASTECEM NOSSO MOTOR DIARIAMENTE.</p>
+                        <p><span class="emoji-in-text">🏆</span> NOSSA JORNADA COMEÇOU COM A VISÃO DE CRIAR UM ECOSSISTEMA ONDE CONCESSIONÁRIAS, LOCADORAS, FINANCEIRAS E MONTADORAS PUDESSEM NÃO APENAS VENDER E COMPRAR ATIVOS, MAS TAMBÉM OTIMIZAR CADA ETAPA DO PROCESSO. <span class="emoji-in-text">💨</span> QUEREMOS QUE VOCÊ SINTA A EMOÇÃO DE ESTAR SEMPRE NA VANGUARDA, COM AS FERRAMENTAS CERTAS PARA DEIXAR A CONCORRÊNCIA COMENDO POEIRA!</p>
+                    </div>
+
+                    <div class="content-card" data-aos="fade-up">
+                        <h2 class="content-card-title"><span class="emoji-in-text">🏆</span> NOSSOS MENTORES LENDÁRIOS</h2>
+                        <div class="text-center my-6">
+                            <img src="https://www.superbid.net/assets/logo_superbid_nova_marca.svg" alt="Logotipo Grupo Superbid" class="brand-logo" data-aos="zoom-in" data-aos-delay="200" onerror="this.onerror=null; this.src='https://placehold.co/200x60/cccccc/333333?text=Logo+Superbid'; this.alt='Logotipo Superbid Indisponível';">
+                        </div>
+                        <p><span class="emoji-in-text">🥇</span> NASCEMOS COM PEDIGREE DE CAMPEÃO! FAZEMOS PARTE DO <strong>GRUPO SUPERBID</strong>, O "REI DA PISTA" DOS REPASSES ONLINE NA AMÉRICA LATINA DESDE 1999. <span class="emoji-in-text">🏁</span> ESSA HERANÇA NOS DEU UM MOTOR POTENTE DE EXPERTISE, CREDIBILIDADE E ACESSO A UM GRID DE LARGADA COM MILHARES DE COMPRADORES E VENDEDORES.</p>
+                        <div class="text-center my-6">
+                            <img src="https://www.autoarremate.com.br/wp-content/uploads/2022/12/logo-actionlabs.svg" alt="Logotipo Action Labs" class="brand-logo" data-aos="zoom-in" data-aos-delay="300" onerror="this.onerror=null; this.src='https://placehold.co/200x50/cccccc/333333?text=Logo+ActionLabs'; this.alt='Logotipo Action Labs Indisponível';">
+                        </div>
+                        <p><span class="emoji-in-text">🚀</span> E PARA GARANTIR QUE ESTEAMOS SEMPRE COM O "NITRO" LIGADO NA INOVAÇÃO, CONTAMOS COM A <strong>ACTION LABS</strong>, O LABORATÓRIO DE IDEIAS TURBINADAS DO GRUPO SUPERBID. É DE LÁ QUE SAEM AS TECNOLOGIAS DE PONTA QUE NOS MANTÊM NA POLE POSITION.</p>
+                    </div>
+
+                    <div class="content-card" data-aos="fade-up">
+                        <h2 class="content-card-title"><span class="emoji-in-text">🎯</span> NOSSA BANDEIRA QUADRICULADA</h2>
+                        <p><span class="emoji-in-text">🏁</span> QUAL É A NOSSA GRANDE CORRIDA? SER A <strong>PLATAFORMA Nº1</strong> EM SOLUÇÕES DIGITAIS PARA O MERCADO AUTOMOTIVO E DE MÁQUINAS PESADAS! <span class="emoji-in-text">🏎️</span> QUEREMOS SER O MOTOR TURBO QUE IMPULSIONA CONCESSIONÁRIAS, LOCADORAS, REVENDEDORES, FINANCEIRAS E MONTADORAS, TRANSFORMANDO A MANEIRA COMO GERENCIAM E ACELERAM A VENDA DE SEUS ATIVOS.</p>
+                        <p><span class="emoji-in-text">🔗</span> NOSSO OBJETIVO É SER A <strong>PONTE TECNOLÓGICA</strong> QUE CONECTA TODOS OS PILOTOS DESTE MERCADO, SIMPLIFICANDO AS MANOBRAS MAIS COMPLEXAS E TURBINANDO A RENTABILIDADE DE CADA PARCEIRO.</p>
+                    </div>
+
+                    <div class="content-card" data-aos="fade-up">
+                        <h2 class="content-card-title"><span class="emoji-in-text">💖</span> O COMBUSTÍVEL DA NOSSA ALMA</h2>
+                        <p class="text-center"><span class="emoji-in-text">⛽</span> TUDO O QUE FAZEMOS É ABASTECIDO POR VALORES SÓLIDOS. ELES SÃO O NOSSO GPS INTERNO, GUIANDO CADA INTERAÇÃO:</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
+                           <div class="valor-card" data-aos="fade-up" data-aos-delay="100">
+                                <div class="valor-card-icon"><span class="emoji-original-color">🎯</span></div>
+                                <h3 class="valor-card-title">CLIENTE NO PÓDIO</h3>
+                                <p class="valor-card-text"><span class="emoji-original-color">🏆</span> ENTREGAMOS UM CARRO QUE SUPERA TODAS AS EXPECTATIVAS NA PISTA!</p>
+                           </div>
+                           <div class="valor-card" data-aos="fade-up" data-aos-delay="200">
+                                <div class="valor-card-icon"><span class="emoji-original-color">🤝</span></div>
+                                <h3 class="valor-card-title">JOGO LIMPO E PISTA TRANSPARENTE</h3>
+                                <p class="valor-card-text"><span class="emoji-original-color">🚦</span> NEGÓCIOS E AMIZADES NA BASE DA CONFIANÇA E CLAREZA TOTAL.</p>
+                           </div>
+                           <div class="valor-card" data-aos="fade-up" data-aos-delay="300">
+                                <div class="valor-card-icon"><span class="emoji-original-color">🚀</span></div>
+                                <h3 class="valor-card-title">CORAGEM PARA ACELERAR</h3>
+                                <p class="valor-card-text"><span class="emoji-original-color">🗺️</span> BRAVURA PARA DESBRAVAR NOVAS ROTAS E BUSCAR O CRESCIMENTO TURBO!</p>
+                           </div>
+                           <div class="valor-card" data-aos="fade-up" data-aos-delay="100">
+                                <div class="valor-card-icon"><span class="emoji-original-color">✨</span></div>
+                                <h3 class="valor-card-title">PIT STOP DE INOVAÇÃO</h3>
+                                <p class="valor-card-text"><span class="emoji-original-color">💡</span> BUSCAMOS INCESSANTEMENTE POR TECNOLOGIAS E AJUSTES QUE OTIMIZEM CADA SEGUNDO NA PISTA.</p>
+                           </div>
+                           <div class="valor-card" data-aos="fade-up" data-aos-delay="200">
+                                <div class="valor-card-icon"><span class="emoji-original-color">🌳</span></div>
+                                <h3 class="valor-card-title">CORRIDA CONSCIENTE</h3>
+                                <p class="valor-card-text"><span class="emoji-original-color">🌍</span> GERAMOS VALOR PENSANDO NO MEIO AMBIENTE E NO IMPACTO SOCIAL.</p>
+                           </div>
+                           <div class="valor-card" data-aos="fade-up" data-aos-delay="300">
+                                <div class="valor-card-icon"><span class="emoji-original-color">⚙️</span></div>
+                                <h3 class="valor-card-title">ENGENHARIA DE ALTA PERFORMANCE</h3>
+                                <p class="valor-card-text"><span class="emoji-original-color">🛠️</span> EFICIÊNCIA E QUALIDADE DE CAMPEÃO EM CADA PEÇA E ESTRATÉGIA.</p>
+                           </div>
+                           <div class="valor-card md:col-span-2 lg:col-span-3" data-aos="fade-up" data-aos-delay="200">
+                                <div class="valor-card-icon"><span class="emoji-original-color">😊</span></div>
+                                <h3 class="valor-card-title">EQUIPE UNIDA, VITÓRIA GARANTIDA</h3>
+                                <p class="valor-card-text"><span class="emoji-original-color">🫂</span> VALORIZAMOS NOSSOS TALENTOS, CRIANDO UM AMBIENTE DE CAMARADAGEM E COLABORAÇÃO.</p>
+                           </div>
+                        </div>
+                    </div>
+
+                    <div class="content-card" data-aos="fade-up">
+                        <h2 class="content-card-title"><span class="emoji-in-text">🗺️</span> SEU GUIA DE PISTA ESTRATÉGICO</h2>
+                        <p><span class="emoji-in-text">📖</span> ESTE NÃO É UM SIMPLES MANUAL, É O SEU <strong>MAPA DO TESOURO</strong> PARA O SUCESSO! <span class="emoji-in-text">🏆</span> ELE FOI FORJADO PARA EQUIPÁ-LO COM O CONHECIMENTO MAIS AFIADO, AS ESTRATÉGIAS MAIS VELOZES E AS FERRAMENTAS MAIS POTENTES PARA VOCÊ DOMINAR O MERCADO.</p>
+                        <p><span class="emoji-in-text">⚙️</span> USE ESTE GUIA COMO SEU FIEL COMPANHEIRO DE EQUIPE. CONSULTE, ESTUDE E, ACIMA DE TUDO, <strong>APLIQUE</strong> CADA GOTA DE SABEDORIA. <span class="emoji-in-text">🚀</span> LEMBRE-SE: O SEU SUCESSO É O NOSSO PÓDIO, E ESTAMOS JUNTOS EM CADA VOLTA DESTA EMOCIONANTE CORRIDA!</p>
+                    </div>
+
+                    <div class="highlight" data-aos="fade-up" data-aos-delay="100">
+                        <p>
+                            <strong class="text-center"><span class="emoji-original-color">🏆</span> CAMPEÃO, ESTE É O SEU MOMENTO!</strong>
+                            <span class="emoji-original-color">🏁</span> COM ESTE GUIA ESTRATÉGICO EM MÃOS, VOCÊ TEM O MAPA PARA TODAS AS VITÓRIAS. <span class="emoji-original-color">🏎️</span> ESTUDE CADA SEÇÃO, ABSORVA CADA INSIGHT COMO SE FOSSE O MELHOR COMBUSTÍVEL ADITIVADO, E PREPARE-SE PARA DEIXAR SUA MARCA NA HISTÓRIA. <span class="emoji-original-color">🚀</span> A PISTA É TODA SUA. ACELERE PARA O SUCESSO!
+                        </p>
+                    </div>
+                </div>
+                <div class="navigation-buttons">
+                    <button class="btn-nav prev" onclick="navigateModules(-1)">❮ VOLTAR</button>
+                    <button class="btn-nav next" onclick="navigateModules(1)">AVANÇAR ❯</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="auto-arremate-content-section" class="playbook-sub-section hidden">
+            <div class="container mx-auto">
+                 <button class="btn-voltar-secao backToTrilhaAprendizadoBtn mb-8 text-sm">
+                    <i class="fas fa-arrow-left mr-2"></i> VOLTAR À TRILHA
+                </button>
+                <h2 class="playbook-content-title text-center">
+                    <span class="emoji">🚗</span><strong class="title-autoarremate">AUTO ARREMATE NA POLE POSITION: DOMINANDO O UNIVERSO DOS VEÍCULOS LEVES!</strong>
+                </h2>
+                <div class="text-content-container playbook-text space-y-10 mt-8">
+                    <div class="content-card" data-aos="fade-up">
+                        <h3 class="content-card-title"><span class="emoji-in-text">🌟</span> A GARAGEM DOS CAMPEÕES: PERFORMANCE E INOVAÇÃO PARA VEÍCULOS LEVES!</h3>
+                        <p><span class="emoji-in-text">🏁</span> PREPARE-SE PARA ENTRAR NA PISTA DE ALTA VELOCIDADE DA AUTO ARREMATE, ONDE CADA VEÍCULO LEVE ENCONTRA SEU DESTINO DE FORMA ÁGIL, INTELIGENTE E LUCRATIVA! <span class="emoji-in-text">🛠️</span> NOSSA PLATAFORMA É O SEU BOX DE FERRAMENTAS COMPLETO, PROJETADO PARA CONCESSIONÁRIAS, LOCADORAS E TODOS OS ASES DO VOLANTE QUE BUSCAM DOMINAR O UNIVERSO DA COMERCIALIZAÇÃO DE CARROS, SUVS, E UTILITÁRIOS.</p>
+                        <p><span class="emoji-in-text">🏆</span> DESDE A AVALIAÇÃO PRECISA COM O NOSSO <strong>RAIOX</strong>, QUE ENXERGA CADA DETALHE DO VEÍCULO COMO UM MECÂNICO EXPERIENTE, ATÉ A PUBLICAÇÃO EM NOSSO <strong>MARKETPLACE B2B</strong>, A MAIOR VITRINE DE OPORTUNIDADES DO BRASIL, A AUTO ARREMATE É A SUA GARANTIA DE POLE POSITION. <span class="emoji-in-text">📊</span> COM NOSSOS <strong>DASHBOARDS</strong>, VOCÊ TEM O PAINEL DE CONTROLE PARA DECISÕES NA VELOCIDADE DA LUZ, TRANSFORMANDO DADOS EM ULTRAPASSAGENS ESTRATÉGICAS!</p>
+                    </div>
+
+                    <div class="content-card" data-aos="fade-up">
+                        <h3 class="content-card-title"><span class="emoji-in-text">✨</span> NOSSOS PILARES MÁGICOS (PDGC): A FÓRMULA SECRETA DA VITÓRIA!</h3>
+                        <p><span class="emoji-in-text">🔑</span> APRESENTAMOS O CONCEITO <strong>PDGC</strong>, A NOSSA FÓRMULA SECRETA PARA TURBINAR SEUS RESULTADOS NO MERCADO DE VEÍCULOS LEVES! <span class="emoji-in-text">💡</span> CADA LETRA É UM COMPONENTE CRUCIAL DO NOSSO MOTOR DE SUCESSO, E JUNTAS, ELAS FORMAM A ENGRENAGEM PERFEITA QUE IMPULSIONA NOSSOS CLIENTES À VITÓRIA:</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
+                            <div class="pdgc-card" data-aos="zoom-in" data-aos-delay="100">
+                                <div class="pdgc-emoji">🅿️</div>
+                                <h4 class="pdgc-title">PRECIFICAÇÃO INTELIGENTE</h4>
+                                <p class="pdgc-description">USE NOSSOS DADOS DE MERCADO PARA CALIBRAR SEUS PREÇOS COMO UM CAMPEÃO, MAXIMIZANDO SUA MARGEM EM CADA NEGOCIAÇÃO!</p>
+                            </div>
+                            <div class="pdgc-card" data-aos="zoom-in" data-aos-delay="200">
+                                <div class="pdgc-emoji">📢</div>
+                                <h4 class="pdgc-title">DIVULGAÇÃO TURBINADA</h4>
+                                <p class="pdgc-description">SEU VEÍCULO NA VITRINE CERTA! ALCANCE NACIONAL EM NOSSO MARKETPLACE B2B E OUTROS CANAIS PARA VENDER MAIS RÁPIDO.</p>
+                            </div>
+                            <div class="pdgc-card" data-aos="zoom-in" data-aos-delay="300">
+                                <div class="pdgc-emoji">🛠️</div>
+                                <h4 class="pdgc-title">GESTÃO EFICIENTE</h4>
+                                <p class="pdgc-description">CONTROLE TOTAL DO SEU ESTOQUE, VISTORIAS DIGITAIS COM RAIOX E DASHBOARDS PARA DECISÕES ÁGEIS. SEU PIT STOP DE COMANDO!</p>
+                            </div>
+                            <div class="pdgc-card" data-aos="zoom-in" data-aos-delay="400">
+                                <div class="pdgc-emoji">💰</div>
+                                <h4 class="pdgc-title">COMERCIALIZAÇÃO VENCEDORA</h4>
+                                <p class="pdgc-description">FERRAMENTAS E ESTRATÉGIAS PARA FECHAR NEGÓCIOS MAIS RÁPIDO, COM MAIS LUCRO E MENOS DOR DE CABEÇA. A BANDEIRADA FINAL!</p>
+                            </div>
+                        </div>
+                        <p class="mt-6"><span class="emoji-in-text">🏁</span> O PDGC É A ESSÊNCIA DO QUE A AUTO ARREMATE ENTREGA: UMA SOLUÇÃO <strong>COMPLETA E INTEGRADA</strong> QUE ATUA EM TODAS AS FRENTES PARA GARANTIR QUE VOCÊ CRUZE A LINHA DE CHEGADA SEMPRE NA FRENTE!</p>
+                    </div>
+
+                    <hr class="my-10 border-t-2 border-gray-200 dark:border-gray-700">
+
+                    <section id="superpoderes-plataforma" data-aos="fade-up">
+                        <h3 class="playbook-section-title !text-center uppercase"><span class="emoji">🦸</span> OS SUPERPODERES DA NOSSA PLATAFORMA: SUA GARAGEM TECNOLÓGICA!</h3>
+                        <p class="text-center mb-8"><span class="emoji-in-text">🚀</span> DESCUBRA AS FERRAMENTAS QUE NOS TORNAM IMBATÍVEIS E IMPULSIONAM O SUCESSO ESTRONDOSO DOS NOSSOS CLIENTES NA AUTO ARREMATE. É AQUI QUE A MÁGICA DA VELOCIDADE E DA EFICIÊNCIA ACONTECE!</p>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <div class="superpower-card" data-aos="fade-up">
+                                <div class="superpower-emoji">🔗</div>
+                                <h4 class="superpower-title">TUDO CONECTADO: A PLATAFORMA INTEGRADA!</h4>
+                                <p class="superpower-description">IMAGINE UM ECOSSISTEMA DIGITAL ONDE TODAS AS FERRAMENTAS QUE VOCÊ PRECISA ESTÃO INTERLIGADAS, FUNCIONANDO EM PERFEITA HARMONIA PARA UMA VISÃO 360º DO SEU NEGÓCIO.</p>
+                            </div>
+                            <div class="superpower-card" data-aos="fade-up" data-aos-delay="100">
+                                <div class="superpower-emoji">🔎</div>
+                                <h4 class="superpower-title">RAIOX: A VISÃO DE RAIO-X DIGITAL!</h4>
+                                <p class="superpower-description">NOSSA FERRAMENTA DE INSPEÇÃO DIGITAL PERMITE UM LEVANTAMENTO COMPLETO DO ESTADO DO VEÍCULO, DA LATARIA AOS DETALHES INTERNOS, GARANTINDO A CONFIANÇA PARA FECHAR NEGÓCIOS.</p>
+                            </div>
+                            <div class="superpower-card" data-aos="fade-up" data-aos-delay="200">
+                                <div class="superpower-emoji">➕</div>
+                                <h4 class="superpower-title">RAIOX+: O HISTÓRICO COMPLETO!</h4>
+                                <p class="superpower-description">MERGULHE FUNDO NO PASSADO DO VEÍCULO, TRAZENDO À TONA INFORMAÇÕES CRUCIAIS COMO HISTÓRICO DE ROUBO, DÉBITOS, MULTAS E SINISTROS PARA PROTEGER SEUS NEGÓCIOS.</p>
+                            </div>
+                            <div class="superpower-card" data-aos="fade-up">
+                                <div class="superpower-emoji">📊</div>
+                                <h4 class="superpower-title">DASHBOARDS: DECISÕES NA VELOCIDADE DA LUZ!</h4>
+                                <p class="superpower-description">ACOMPANHE EM TEMPO REAL OS INDICADORES CHAVE DO SEU NEGÓCIO: GIRO DE ESTOQUE, PERFORMANCE DE VENDAS, PRECIFICAÇÃO E MUITO MAIS, PARA DECISÕES RÁPIDAS E INTELIGENTES.</p>
+                            </div>
+                            <div class="superpower-card" data-aos="fade-up" data-aos-delay="100">
+                                <div class="superpower-emoji">🤝</div>
+                                <h4 class="superpower-title">MARKETPLACE B2B: O GRANDE PONTO DE ENCONTRO!</h4>
+                                <p class="superpower-description">CONECTE-SE AO MAIOR UNIVERSO DE OPORTUNIDADES B2B DO BRASIL. PUBLIQUE SEUS VEÍCULOS PARA UMA AUDIÊNCIA QUALIFICADA OU ENCONTRE O ESTOQUE QUE VOCÊ PRECISA.</p>
+                            </div>
+                            <div class="superpower-card" data-aos="fade-up" data-aos-delay="200">
+                                <div class="superpower-emoji">⚡</div>
+                                <h4 class="superpower-title">COTAÇÃO RÁPIDA: AGILIDADE PURA!</h4>
+                                <p class="superpower-description">PRECISA AVALIAR UM VEÍCULO PARA COMPRA OU TRADE-IN? OBTENHA UMA ESTIMATIVA PRECISA E BASEADA EM DADOS DE MERCADO EM QUESTÃO DE SEGUNDOS. AGILIDADE PARA SUAS NEGOCIAÇÕES!</p>
+                            </div>
+                             <div class="superpower-card" data-aos="fade-up">
+                                <div class="superpower-emoji">🏷️</div>
+                                <h4 class="superpower-title">WHITE LABEL: SUA MARCA, NOSSA POTÊNCIA!</h4>
+                                <p class="superpower-description">FORTALEÇA SUA MARCA COM UM PORTAL DE VENDAS ONLINE COM SUA IDENTIDADE VISUAL, MAS COM TODA A TECNOLOGIA E ROBUSTEZ DA PLATAFORMA AUTO ARREMATE POR TRÁS.</p>
+                            </div>
+                            <div class="superpower-card" data-aos="fade-up" data-aos-delay="100">
+                                <div class="superpower-emoji">🔌</div>
+                                <h4 class="superpower-title">INTEGRAÇÕES: CONECTANDO SEU UNIVERSO!</h4>
+                                <p class="superpower-description">NOSSA PLATAFORMA FALA A LÍNGUA DO SEU NEGÓCIO! INTEGRAMOS FACILMENTE COM OS PRINCIPAIS CRMS E ERPS DO MERCADO, GARANTINDO UM FLUXO DE DADOS AUTOMÁTICO E SEM GARGALOS.</P>
+                            </div>
+                             <div class="superpower-card" data-aos="fade-up" data-aos-delay="200">
+                                <div class="superpower-emoji">🔑</div>
+                                <h4 class="superpower-title">JORNADA PÓS-VENDA: FECHANDO COM CHAVE DE OURO!</h4>
+                                <p class="superpower-description">A VENDA NÃO TERMINA NA ASSINATURA! OFERECEMOS FERRAMENTAS PARA GERENCIAR A JORNADA PÓS-VENDA, GARANTINDO A SATISFAÇÃO E FIDELIZAÇÃO DO SEU CLIENTE.</P>
+                            </div>
+                            <div class="superpower-card" data-aos="fade-up">
+                                <div class="superpower-emoji">🔒</div>
+                                <h4 class="superpower-title">PERMISSÕES DE ACESSO: CONTROLE TOTAL!</h4>
+                                <p class="superpower-description">SEGURANÇA E CONTROLE SÃO FUNDAMENTAIS. DEFINA QUEM PODE VER E FAZER O QUÊ DENTRO DA PLATAFORMA, GARANTINDO QUE CADA MEMBRO DA EQUIPE TENHA O ACESSO CERTO.</P>
+                            </div>
+                           <div class="superpower-card" data-aos="fade-up" data-aos-delay="100">
+                                <div class="superpower-emoji">📦</div>
+                                <h4 class="superpower-title">MODELO DE OFERTAS EM LOTE: COMPRE MAIS, MAIS FÁCIL!</h4>
+                                <p class="superpower-description">PARA QUEM BUSCA VOLUME COM INTELIGÊNCIA. PERMITE QUE COMPRADORES ADQUIRAM MÚLTIPLOS VEÍCULOS DE UMA SÓ VEZ, COM CONDIÇÕES ESPECIAIS E UM PROCESSO SIMPLIFICADO.</P>
+                            </div>
+                        </div>
+                    </section>
+
+                    <div class="highlight-blue" data-aos="fade-up">
+                        <p class="text-lg md:text-xl font-semibold">
+                            <strong class="block text-xl md:text-2xl mb-2 font-bold text-center"><span class="emoji">📢</span> EQUIPE AUTO ARREMATE, PREPARAR PARA ACELERAR!</strong>
+                            <span class="initial-emoji">⭐</span> VOCÊS NÃO VENDEM APENAS UMA PLATAFORMA, VOCÊS ENTREGAM O <strong>MAPA DA MINA PARA A TRANSFORMAÇÃO DIGITAL</strong> NO MERCADO AUTOMOTIVO!
+                            <span class="initial-emoji">💪</span> ACREDITEM NO PODER DA NOSSA SOLUÇÃO, DOMINEM CADA FERRAMENTA, E MOSTREM AOS NOSSOS CLIENTES COMO A AUTO ARREMATE® É A <strong>CHAVE PARA O PÓDIO DELES!</strong> <span class="initial-emoji">🚀</span> KATCHAU! VAMOS COM TUDO!
+                        </p>
+                    </div>
+                </div>
+
+                <div class="navigation-buttons">
+                    <button class="btn-nav prev" onclick="navigateModules(-1)">❮ VOLTAR</button>
+                    <button class="btn-nav next" onclick="navigateModules(1)">AVANÇAR ❯</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="arremaq-content-section" class="playbook-sub-section hidden">
+            <div class="container mx-auto px-4">
+                <button class="btn-voltar-secao backToTrilhaAprendizadoBtn mb-8 text-sm">
+                    <i class="fas fa-arrow-left mr-2"></i> VOLTAR À TRILHA
+                </button>
+                <h2 class="playbook-content-title">
+                    <span class="emoji-original-color">🚜</span> <strong class="title-arremaq">ARREMAQ: A FORÇA BRUTA DOS GIGANTES DO AGRO E CONSTRUÇÃO!</strong>
+                </h2>
+                <div class="text-content-container playbook-text space-y-10 mt-8">
+                    <div class="content-card" data-aos="fade-up">
+                        <h3 class="content-card-title"><span class="emoji-in-text">🏗️</span> O TERRITÓRIO DOS TITÃS: BEM-VINDO À ARREMAQ!</h3>
+                        <p class="max-w-4xl mx-auto text-left md:text-justify"><span class="emoji-in-text">🌟</span> SAUDAÇÕES, MESTRE CONSTRUTOR E GIGANTE DO AGRO! ADENTRE O UNIVERSO ARREMAQ, ONDE A FORÇA BRUTA ENCONTRA A INTELIGÊNCIA ESTRATÉGICA. <span class="emoji-in-text">🚜</span> AQUI, TRATORES, COLHEITADEIRAS, ESCAVADEIRAS E TODOS OS TITÃS DE AÇO QUE MOVEM O PROGRESSO ENCONTRAM UMA PLATAFORMA ROBUSTA PARA OTIMIZAR SUA COMERCIALIZAÇÃO E GESTÃO.</p>
+                        <p class="max-w-4xl mx-auto text-left md:text-justify"><span class="emoji-in-text">⚙️</span> SEJA VOCÊ UMA CONCESSIONÁRIA DE MÁQUINAS PESADAS, UMA LOCADORA DE EQUIPAMENTOS DE CONSTRUÇÃO OU UM GRANDE FROTISTA DO AGRONEGÓCIO, A ARREMAQ É SEU PARCEIRO DE CONFIANÇA PARA GARANTIR QUE SEUS ATIVOS MAIS VALIOSOS SEJAM NEGOCIADOS COM MÁXIMA EFICIÊNCIA E RENTABILIDADE. <span class="emoji-in-text">🏆</span> PREPARE-SE PARA OPERAR COM A FORÇA DE UM TRATOR E A PRECISÃO DE UM GPS AGRÍCOLA!</p>
+                    </div>
+
+                    <hr class="my-10 border-t-2 border-gray-200 dark:border-gray-700/50">
+
+                    <div class="content-card" data-aos="fade-up">
+                        <h3 class="content-card-title"><span class="emoji-in-text">🛠️</span> NOSSO ARSENAL PESADO: SOLUÇÕES SOB MEDIDA</h3>
+                        <p class="mb-8 max-w-3xl mx-auto text-left md:text-justify"><span class="emoji-in-text">🔩</span> CONHEÇA AS FERRAMENTAS QUE FAZEM DA ARREMAQ A PLATAFORMA LÍDER PARA O MERCADO DE MÁQUINAS. É TECNOLOGIA DE PONTA PARA QUEM LIDA COM O TRABALHO PESADO!</p>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+                           <div class="super-power-card" data-aos="fade-up" data-aos-delay="100">
+                                <div class="super-power-icon">🔎</div>
+                                <h4 class="super-power-title">RAIO-X PARA MÁQUINAS</h4>
+                                <p class="super-power-text">DIAGNÓSTICOS PRECISOS COM CHECKLISTS DETALHADOS E RELATÓRIOS FOTOGRÁFICOS COMPLETOS, GARANTINDO TRANSPARÊNCIA TOTAL NAS NEGOCIAÇÕES.</p>
+                            </div>
+                            <div class="super-power-card" data-aos="fade-up" data-aos-delay="200">
+                                <div class="super-power-icon">🌐</div>
+                                <h4 class="super-power-title">MARKETPLACE B2B PARA GIGANTES</h4>
+                                <p class="super-power-text">CONECTAMOS VENDEDORES A COMPRADORES ESPECIALIZADOS EM TODO O BRASIL, GARANTINDO MAIOR LIQUIDEZ PARA SEU ESTOQUE DE MÁQUINAS PESADAS.</p>
+                            </div>
+                            <div class="super-power-card" data-aos="fade-up" data-aos-delay="300">
+                                <div class="super-power-icon">📊</div>
+                                <h4 class="super-power-title">DASHBOARDS DE PERFORMANCE</h4>
+                                <p class="super-power-text">MONITORE SUA FROTA, ACOMPANHE O GIRO DE ESTOQUE E TOME DECISÕES BASEADAS EM DADOS PARA OTIMIZAR A RENTABILIDADE DOS SEUS ATIVOS.</p>
+                            </div>
+                             <div class="super-power-card" data-aos="fade-up" data-aos-delay="400">
+                                <div class="super-power-icon">🔗</div>
+                                <h4 class="super-power-title">INTEGRAÇÃO COM ERPS</h4>
+                                <p class="super-power-text">SINCRONIZE NOSSA PLATAFORMA COM SEUS SISTEMAS DE GESTÃO PARA UM FLUXO DE DADOS EFICIENTE, EVITANDO RETRABALHO E CONSOLIDANDO SUA OPERAÇÃO.</P>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="highlight-box-arremaq" data-aos="zoom-in-up">
+                        <div class="highlight-icon">📢</div>
+                        <h4 class="highlight-title">EQUIPE ARREMAQ, FORÇA TOTAL!</h4>
+                        <p class="highlight-text">
+                            <span class="emoji-in-text">🏗️</span> VOCÊS NÃO VENDEM APENAS MÁQUINAS; VOCÊS OFERECEM A <strong>FORÇA QUE CONSTRÓI O FUTURO E A TECNOLOGIA QUE ALIMENTA A NAÇÃO!</strong> <span class="emoji-in-text">🌱</span>
+                            APRESENTEM A ARREMAQ COM A ROBUSTEZ DE UM GIGANTE E A PRECISÃO DE UM ENGENHEIRO. MOSTREM COMO NOSSA PLATAFORMA É A <strong>ALIADA ESTRATÉGICA PARA O SUCESSO DOS TITÃS DO AGRO E DA CONSTRUÇÃO!</strong> <span class="emoji-in-text">🚀</span> VAMOS ERGUER IMPÉRIOS!
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="navigation-buttons">
+                    <button class="btn-nav prev" onclick="navigateModules(-1)">❮ VOLTAR</button>
+                    <button class="btn-nav next" onclick="navigateModules(1)">AVANÇAR ❯</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="mapeando-campeoes-section" class="playbook-sub-section hidden">
+            <div class="container mx-auto px-4">
+                <button class="btn-voltar-secao backToTrilhaAprendizadoBtn mb-8 text-sm">
+                    <i class="fas fa-arrow-left mr-2"></i> VOLTAR À TRILHA
+                </button>
+                <h1 class="playbook-content-title text-center" data-aos="fade-down"><span class="emoji-original-color">🎯</span> MAPEANDO OS CAMPEÕES: NOSSOS CLIENTES IDEAIS (ICPS & PERSONAS)</h1>
+
+                <div class="text-content-container space-y-10 mt-8">
+                    <div class="content-card" data-aos="fade-up">
+                        <h2 class="content-card-title"><span class="emoji-in-text">🔑</span> O MAPA DA ALMA DO CLIENTE: POR QUE ESTE CONHECIMENTO É OURO PURO?</h2>
+                        <p class="max-w-4xl mx-auto text-left md:text-justify"><span class="emoji-in-text">🌍</span> NO VASTO E MULTIFACETADO UNIVERSO DAS VENDAS, CONHECER PROFUNDAMENTE QUEM VOCÊ ALMEJA ALCANÇAR NÃO É MERAMENTE UMA VANTAGEM ESTRATÉGICA; É A PRÓPRIA FUNDAÇÃO SOBRE A QUAL SE ERGUEM OS MAIS GLORIOSOS IMPÉRIOS COMERCIAIS! <span class="emoji-in-text">💡</span> COMPREENDER AS DORES LATENTES QUE AFLIGEM SEUS PROSPECTS, OS DESEJOS FLAMEJANTES QUE OS IMPULSIONAM, OS DESAFIOS HERCÚLEOS QUE ENFRENTAM DIARIAMENTE E AS MOTIVAÇÕES ARCANAS QUE MOLDAM SUAS DECISÕES PERMITE QUE VOCÊ, NOBRE ESTRATEGISTA, FORJE CONEXÕES GENUÍNAS E INDESTRUTÍVEIS. <span class="emoji-in-text">🏆</span> COM ESTE SABER, SUAS OFERTAS RESSORÃO COMO UM CHAMADO IRRESISTÍVEL AO DESTINO, E VOCÊ CELEBRARÁ INÚMERAS CONQUISTAS, OUVINDO O DOCE SOM DO "SIM!" TRIUNFANTE ECOAR PELOS SEUS SALÕES.</p>
+                        <p class="max-w-4xl mx-auto text-left md:text-justify"><span class="emoji-in-text">📖</span> NESTE CAPÍTULO CRUCIAL DO NOSSO GRIMÓRIO, MERGULHAREMOS JUNTOS NOS MISTÉRIOS DO ICP (IDEAL CUSTOMER PROFILE OU PERFIL DE CLIENTE IDEAL – O ARQUÉTIPO DA EMPRESA PERFEITA) E NAS PERSONAS LENDÁRIAS QUE DÃO ROSTO E ALMA AOS DIVERSOS ARQUÉTIPOS DE CLIENTES DOS REINOS DA AUTO ARREMATE® E ARREMAQ®. <span class="emoji-in-text">🏎️</span> PREPARE-SE PARA SE TORNAR UM MESTRE CONSUMADO NA ARTE DE IDENTIFICAR, COMPREENDER E ABORDAR CADA UM DESSES NOBRES HERÓIS COM A PRECISÃO DE UM SÁBIO CONSELHEIRO E A EMPATIA DE UM VERDADEIRO ALIADO!</p>
+                    </div>
+                    
+                    <hr class="my-10 border-t-2 border-gray-200 dark:border-gray-700">
+
+                    <section data-aos="fade-up">
+                        <h2 class="playbook-section-title"><span class="emoji-original-color">🌟</span> O ARQUÉTIPO DO CLIENTE IDEAL (ICP): FORJANDO O PERFIL DA EMPRESA PERFEITA!</h2>
+                        <p class="max-w-4xl mx-auto text-left md:text-justify"><span class="emoji-original-color">💡</span>O ICP, OU PERFIL DE CLIENTE IDEAL, É UMA DESCRIÇÃO METICULOSA E DETALHADA DA EMPRESA – OU DO TIPO DE ENTIDADE COMERCIAL – QUE MAIS SE BENEFICIA DOS SEUS ELIXIRES E ARTEFATOS MÁGICOS (NOSSOS PRODUTOS E SERVIÇOS). <span class="emoji-original-color">💰</span>CONSEQUENTEMENTE, SÃO ESSES OS ALIADOS QUE MAIS VALOR E GLÓRIA TRAZEM AOS PRÓSPEROS REINOS DA AUTO ARREMATE® E ARREMAQ®. <span class="emoji-original-color">🛣️</span>NÃO SE TRATA DE UMA ÚNICA CIDADELA ESPECÍFICA, MAS SIM DE UM CONJUNTO DE CARACTERÍSTICAS CELESTIAIS E TERRENAS QUE DEFINEM SEUS MELHORES, MAIS LEAIS E MAIS LUCRATIVOS PARCEIROS DE JORNADA.</p>
+
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
+                            <div class="valor-card border-t-4 border-aa-green" data-aos="fade-up">
+                                <h3 class="valor-card-title text-2xl"><span class="emoji-original-color">🚗💨</span> ICP <span class="text-aa-green-darker">AUTO ARREMATE®</span></h3>
+                                <div class="text-left valor-card-text space-y-4">
+                                    <p><span class="emoji-in-text">🏢</span> TIPO DE REINO (EMPRESA): CONCESSIONÁRIAS DE VEÍCULOS, GRANDES CLÃS DE CONCESSIONÁRIAS, FROTAS DE LOCADORAS, E RENOMADOS LOJISTAS DE SEMINOVOS.</p>
+                                    <p><span class="emoji-in-text">📊</span> VOLUME DE COMÉRCIO: REINOS COM ALTO VOLUME DE NEGÓCIOS, BUSCANDO OTIMIZAR O GIRO DE ESTOQUE E A RENTABILIDADE.</p>
+                                    <p><span class="emoji-in-text">💻</span> AFINIDADE COM A ALQUIMIA DIGITAL: REINOS QUE USAM OU ESTÃO ABERTOS A SOLUÇÕES DIGITAIS PARA AVALIAÇÃO, GESTÃO E COMERCIALIZAÇÃO.</p>
+                                    <p><span class="emoji-in-text">📈</span> BUSCA PELA EFICIÊNCIA E PROSPERIDADE: ALIADOS QUE ANSEIAM POR REDUZIR CUSTOS, AUMENTAR MARGENS DE LUCRO E ACELERAR O CICLO DE VENDAS.</p>
+                                    <p><span class="emoji-in-text">🌐</span> VISÃO ESTRATÉGICA DE MERCADO AMPLA: REINOS QUE ENTENDEM O PODER DE UM MARKETPLACE B2B PARA EXPANSÃO.</p>
+                                </div>
+                            </div>
+                             <div class="valor-card border-t-4 border-arremaq-orange" data-aos="fade-up">
+                                <h3 class="valor-card-title text-2xl"><span class="emoji-original-color">🚜⚙️</span> ICP <span class="text-arremaq-orange-darker">ARREMAQ®</span></h3>
+                                <div class="text-left valor-card-text space-y-4">
+                                    <p><span class="emoji-in-text">🏗️</span> TIPO DE DOMÍNIO (EMPRESA): CONCESSIONÁRIAS DE MÁQUINAS (AGRÍCOLAS, CONSTRUÇÃO), LOCADORAS DE EQUIPAMENTOS PESADOS, CONSTRUTORAS, E FROTISTAS DO AGRONEGÓCIO.</p>
+                                    <p><span class="emoji-in-text">⚙️</span> NECESSIDADE DE PERÍCIA TÉCNICA: DOMÍNIOS QUE VALORIZAM AVALIAÇÕES TÉCNICAS MINUCIOSAS E TRANSPARÊNCIA NO HISTÓRICO DO EQUIPAMENTO.</p>
+                                    <p><span class="emoji-in-text">💰</span> FOCO EM ATIVOS DE GRANDE VALOR: ALIADOS QUE LIDAM COM A COMPRA E VENDA DE EQUIPAMENTOS DE ALTO VALOR E BUSCAM OTIMIZAR O RETORNO SOBRE O INVESTIMENTO.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                     <hr class="my-10 border-t-2 border-gray-200 dark:border-gray-700">
+
+                    <section data-aos="fade-up">
+                        <h2 class="playbook-section-title"><span class="emoji-original-color">📜</span> CNAES PERMITIDOS: A CHAVE PARA NOSSOS REINOS B2B!</h2>
+                        <p class="max-w-4xl mx-auto text-center"><span class="emoji-in-text">🔑</span> PARA GARANTIR ALIANÇAS FORTES, FOCAMOS EM EMPRESAS COM ATIVIDADES ALINHADAS AO SETOR AUTOMOTIVO E DE MÁQUINAS. A VERIFICAÇÃO DO CNAE É O PRIMEIRO PASSO PARA GARANTIR A SINERGIA. <span class="emoji-in-text">🌟</span></p>
+                        <ul class="cnae-list max-w-4xl mx-auto mt-8 space-y-2">
+                           <li data-aos="fade-right" data-aos-delay="100"><strong>45.11-1-01</strong> - COMÉRCIO A VAREJO DE AUTOMÓVEIS, CAMIONETAS E UTILITÁRIOS NOVOS.</li>
+                           <li data-aos="fade-right" data-aos-delay="150"><strong>45.11-1-02</strong> - COMÉRCIO A VAREJO DE AUTOMÓVEIS, CAMIONETAS E UTILITÁRIOS USADOS.</li>
+                           <li data-aos="fade-right" data-aos-delay="200"><strong>45.11-1-03</strong> - COMÉRCIO POR ATACADO DE AUTOMÓVEIS, CAMIONETAS E UTILITÁRIOS NOVOS E USADOS.</li>
+                           <li data-aos="fade-right" data-aos-delay="250"><strong>45.11-1-04</strong> - COMÉRCIO POR ATACADO DE CAMINHÕES NOVOS E USADOS.</li>
+                           <li data-aos="fade-right" data-aos-delay="300"><strong>45.11-1-05</strong> - COMÉRCIO POR ATACADO DE REBOQUES E SEMI-REBOQUES NOVOS E USADOS.</li>
+                           <li data-aos="fade-right" data-aos-delay="350"><strong>45.11-1-06</strong> - COMÉRCIO POR ATACADO DE ÔNIBUS E MICROÔNIBUS NOVOS E USADOS.</li>
+                           <li data-aos="fade-right" data-aos-delay="400"><strong>45.12-9-01</strong> - REPRESENTANTES COMERCIAIS E AGENTES DO COMÉRCIO DE VEÍCULOS AUTOMOTORES.</li>
+                           <li data-aos="fade-right" data-aos-delay="450"><strong>45.12-9-02</strong> - COMÉRCIO SOB CONSIGNAÇÃO DE VEÍCULOS AUTOMOTORES.</li>
+                           <li data-aos="fade-right" data-aos-delay="500"><strong>45.41-2-01</strong> - COMÉRCIO POR ATACADO DE MOTOCICLETAS E MOTONETAS.</li>
+                           <li data-aos="fade-right" data-aos-delay="550"><strong>45.41-2-03</strong> - COMÉRCIO A VAREJO DE MOTOCICLETAS E MOTONETAS NOVAS.</li>
+                           <li data-aos="fade-right" data-aos-delay="600"><strong>45.41-2-04</strong> - COMÉRCIO A VAREJO DE MOTOCICLETAS E MOTONETAS USADAS.</li>
+                           <li data-aos="fade-right" data-aos-delay="650"><strong>77.11-0-00</strong> - LOCAÇÃO DE AUTOMÓVEIS SEM CONDUTOR.</li>
+                           <li data-aos="fade-right" data-aos-delay="700"><strong>77.19-5-99</strong> - LOCAÇÃO DE OUTROS MEIOS DE TRANSPORTE NÃO ESPECIFICADOS ANTERIORMENTE, SEM CONDUTOR.</li>
+                        </ul>
+                    </section>
+
+                    <hr class="my-10 border-t-2 border-gray-200 dark:border-gray-700">
+
+                    <section data-aos="fade-up">
+                        <h2 class="playbook-section-title"><span class="emoji-original-color">🎭</span> AS FACES DA AVENTURA: CONVOCANDO NOSSAS PERSONAS LENDÁRIAS!</h2>
+                        <p class="max-w-4xl mx-auto text-left md:text-justify"><span class="emoji-in-text">👥</span> ENQUANTO O ICP DESCREVE O "REINO IDEAL", AS PERSONAS HUMANIZAM OS DECISORES E INFLUENCIADORES DENTRO DESSAS EMPRESAS. <span class="emoji-in-text">📜</span> ELAS SÃO REPRESENTAÇÕES SEMI-FICTÍCIAS, BASEADAS EM DADOS E INTERAÇÕES REAIS. <span class="emoji-in-text">🗺️</span> CONHECER NOSSAS PERSONAS LENDÁRIAS NOS PERMITE ADAPTAR NOSSA COMUNICAÇÃO E ABORDAGEM, FALANDO DIRETAMENTE AO CORAÇÃO DE CADA UM.</p>
+                        
+                        <div class="mt-12">
+                            <h3 class="playbook-section-title text-2xl"><span class="emoji-original-color">🚗💨</span> HERÓIS DO ASFALTO: PERSONAS LENDÁRIAS DA <span class="text-aa-green-darker">AUTO ARREMATE</span>!</h3>
+                            <h4 class="text-center font-semibold text-lg text-aa-dark-blue dark:text-aa-green-lighter mb-8">NO REINO DAS CONCESSIONÁRIAS: ALIADOS E DESAFIOS!</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 personas-grid">
+                                <div class="persona-card" data-aos="zoom-in-up">
+                                    <img src="https://i.imgur.com/odoe4Qx.jpeg" alt="Foto de Marcelo Nascimento">
+                                    <h3 class="persona-name">MARCELO NASCIMENTO</h3>
+                                    <p class="persona-focus">CONCESSIONÁRIA (GERENTE/DONO)</p>
+                                    <p class="persona-description"><span class="emoji-in-text">👨‍💼</span> MARCELO É O GRANDE MESTRE DE SUA CONCESSIONÁRIA, UM LÍDER EXPERIENTE FOCADO EM RESULTADOS GRANDIOSOS.</p>
+                                    <h4 class="persona-section-title"><span class="emoji-in-text">🎯</span> OBJETIVOS PRINCIPAIS:</h4>
+                                    <ul><li>EXPANDIR VENDAS, MAXIMIZAR LUCRO, OTIMIZAR GIRO DE ESTOQUE.</li></ul>
+                                    <h4 class="persona-section-title"><span class="emoji-in-text">😥</span> DORES E DESAFIOS:</h4>
+                                    <ul><li>PRECIFICAÇÃO INCORRETA, AVALIAÇÕES LENTAS, BAIXA RENTABILIDADE, CONCORRÊNCIA ACIRRADA.</li></ul>
+                                    <h4 class="persona-section-title"><span class="emoji-in-text">💡</span> COMO A AUTO ARREMATE AJUDA:</h4>
+                                    <ul><li>TRANSFORMA SEMINOVOS EM CENTRO DE LUCRO, FORNECE RAIOX®, ABRE PORTAS PARA O MARKETPLACE B2B.</li></ul>
+                                    <p class="persona-arguments"><strong><span class="emoji-in-text">🔑</span> ARGUMENTOS:</strong> "TRANSFORME SUA OPERAÇÃO COM NOSSA PLATAFORMA", "PADRONIZE SUAS AVALIAÇÕES COM O PODER DO RAIOX®", "ACELERE O GIRO DO SEU ESTOQUE COM NOSSO MARKETPLACE B2B".</p>
+                                </div>
+                                <div class="persona-card" data-aos="zoom-in-up">
+                                    <img src="https://i.imgur.com/0gNvzob.jpeg" alt="Foto de Lucas Silva">
+                                    <h3 class="persona-name">LUCAS SILVA</h3>
+                                    <p class="persona-focus">CONCESSIONÁRIA (COMPRADOR/GER. SEMINOVOS)</p>
+                                    <p class="persona-description"><span class="emoji-in-text">👨‍💻</span> LUCAS É O MESTRE AVALIADOR, UM GUERREIRO PRÁTICO, ANALÍTICO E DETALHISTA.</p>
+                                    <h4 class="persona-section-title"><span class="emoji-in-text">🎯</span> OBJETIVOS PRINCIPAIS:</h4>
+                                    <ul><li>ADQUIRIR VEÍCULOS COM ALTO POTENCIAL, AVALIAÇÕES PRECISAS, MINIMIZAR RISCOS.</li></ul>
+                                    <h4 class="persona-section-title"><span class="emoji-in-text">😥</span> DORES E DESAFIOS:</h4>
+                                    <ul><li>TEMPO ESCASSO, DIFICULDADE EM OBTER HISTÓRICO, PRESSÃO PARA COMPRAR BEM.</li></ul>
+                                    <h4 class="persona-section-title"><span class="emoji-in-text">💡</span> COMO A AUTO ARREMATE AJUDA:</h4>
+                                    <ul><li>APLICATIVO RAIOX®, INTEGRAÇÃO COM RAIOX+®, ACESSO A DADOS DE PRECIFICAÇÃO.</li></ul>
+                                    <p class="persona-arguments"><strong><span class="emoji-in-text">🔑</span> ARGUMENTOS:</strong> "AGILIZE SUAS AVALIAÇÕES COM A PRECISÃO DO RAIOX®", "DESVENDE O HISTÓRICO COMPLETO DO VEÍCULO", "NOSSA PLATAFORMA É SEU ALIADO PARA COMPRAR MELHOR".</p>
+                                </div>
+                            </div>
+
+                             <h4 class="text-center font-semibold text-lg text-aa-dark-blue dark:text-aa-green-lighter mt-12 mb-8">O COMÉRCIO ENTRE REINOS (FOCO REVENDEDOR)</h4>
+                             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 personas-grid">
+                                 <div class="persona-card md:col-span-2 max-w-2xl mx-auto" data-aos="zoom-in-up">
+                                    <img src="https://i.imgur.com/xvH943K.jpeg" alt="Foto de Leticia Morais">
+                                    <h3 class="persona-name">LETICIA MORAIS</h3>
+                                    <p class="persona-focus">REVENDEDORA MULTIMARCAS</p>
+                                    <p class="persona-description"><span class="emoji-in-text">👩‍💼</span> LETICIA É A SOBERANA DE SUA LOJA DE VEÍCULOS SEMINOVOS. UMA COMERCIANTE ÁGIL EM BUSCA DAS MELHORES OPORTUNIDADES.</p>
+                                    <h4 class="persona-section-title"><span class="emoji-in-text">🎯</span> OBJETIVOS:</h4>
+                                    <ul><li>ENCONTRAR VEÍCULOS DE QUALIDADE, TER ACESSO A INVENTÁRIO DIVERSIFICADO.</li></ul>
+                                    <h4 class="persona-section-title"><span class="emoji-in-text">😥</span> DORES E DESAFIOS:</h4>
+                                    <ul><li>BATALHA PARA ENCONTRAR ESTOQUE DE QUALIDADE, FALTA DE TRANSPARÊNCIA.</li></ul>
+                                    <h4 class="persona-section-title"><span class="emoji-in-text">💡</span> COMO A AUTO ARREMATE AJUDA:</h4>
+                                    <ul><li>ACESSO AO MARKETPLACE B2B, INFORMAÇÕES DETALHADAS COM RAIOX®, PROCESSO DE COMPRA SEGURO.</li></ul>
+                                    <p class="persona-arguments"><strong><span class="emoji-in-text">🔑</span> ARGUMENTOS:</strong> "ENCONTRE OS MELHORES SEMINOVOS EM UM SÓ LUGAR", "ADQUIRA DE CONCESSIONÁRIAS E LOCADORAS COM SEGURANÇA".</p>
+                                </div>
+                             </div>
+
+                             <h4 class="text-center font-semibold text-lg text-aa-dark-blue dark:text-aa-green-lighter mt-12 mb-8">OS GUARDIÕES DAS FROTAS (FOCO LOCADORA)</h4>
+                             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 personas-grid">
+                                 <div class="persona-card md:col-span-2 max-w-2xl mx-auto" data-aos="zoom-in-up">
+                                    <img src="https://i.imgur.com/mXktPTH.jpeg" alt="Foto de Alisson Rosa">
+                                    <h3 class="persona-name">ALISSON ROSA</h3>
+                                    <p class="persona-focus">LOCADORA (GERENTE DE FROTA)</p>
+                                    <p class="persona-description"><span class="emoji-in-text">👨‍✈️</span> ALISSON É O COMANDANTE DA FROTA, UM ESTRATEGA QUE GERENCIA VASTOS EXÉRCITOS DE VEÍCULOS.</p>
+                                    <h4 class="persona-section-title"><span class="emoji-in-text">🎯</span> OBJETIVOS:</h4>
+                                    <ul><li>OTIMIZAR CUSTO E VALOR DE REVENDA, GARANTIR GIRO RÁPIDO, GERENCIAR CICLO DE VIDA DA FROTA.</li></ul>
+                                    <h4 class="persona-section-title"><span class="emoji-in-text">😥</span> DORES E DESAFIOS:</h4>
+                                    <ul><li>PROCESSOS COMPLEXOS E DEMORADOS, PERDA DE VALOR POR DEPRECIAÇÃO, DIFICULDADE EM ALCANÇAR COMPRADORES.</li></ul>
+                                    <h4 class="persona-section-title"><span class="emoji-in-text">💡</span> COMO A AUTO ARREMATE AJUDA:</h4>
+                                    <ul><li>MARKETPLACE B2B PARA ESCOAMENTO RÁPIDO, DIGITALIZAÇÃO COM RAIOX®, DASHBOARDS PARA ACOMPANHAMENTO.</li></ul>
+                                    <p class="persona-arguments"><strong><span class="emoji-in-text">🔑</span> ARGUMENTOS:</strong> "VENDA SUA FROTA DESMOBILIZADA COM MAIS VELOCIDADE E RENTABILIDADE", "DIGITALIZE SEU PROCESSO DE REMARKETING".</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-16">
+                             <h3 class="playbook-section-title text-2xl"><span class="emoji-original-color">🚜⚙️</span> TITÃS DO CAMPO E DA CONSTRUÇÃO: PERSONAS LENDÁRIAS DA <span class="text-arremaq-orange-darker">ARREMAQ</span>!</h3>
+                             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 personas-grid">
+                                <div class="persona-card" data-aos="zoom-in-up">
+                                    <img src="https://i.imgur.com/yBvPoGi.jpeg" alt="Foto de Gabriel Nascimento">
+                                    <h3 class="persona-name">GABRIEL NASCIMENTO</h3>
+                                    <p class="persona-focus">ESPECIALISTA <span class="text-arremaq-orange-darker">ARREMAQ</span></p>
+                                    <p class="persona-description"><span class="emoji-in-text">👷</span> GABRIEL É O ESPECIALISTA TÉCNICO E COMERCIAL DA ARREMAQ, APAIXONADO POR MÁQUINAS PESADAS.</p>
+                                    <h4 class="persona-section-title"><span class="emoji-in-text">🎯</span> OBJETIVOS:</h4><ul><li>EDUCAR MERCADO, GARANTIR AVALIAÇÕES PRECISAS, EXPANDIR REDE DE USUÁRIOS.</li></ul>
+                                    <h4 class="persona-section-title"><span class="emoji-in-text">😥</span> DORES (QUE ELE RESOLVE):</h4><ul><li>FALTA DE TRANSPARÊNCIA, PROCESSOS DEMORADOS, RISCO DE INFORMAÇÕES IMPRECISAS.</li></ul>
+                                    <p class="persona-arguments"><strong><span class="emoji-in-text">🔑</span> ARGUMENTOS:</strong> "VENDA SUAS MÁQUINAS COM SEGURANÇA E TRANSPARÊNCIA", "ACESSE UM INVENTÁRIO QUALIFICADO".</p>
+                                </div>
+                                <div class="persona-card" data-aos="zoom-in-up">
+                                    <img src="https://i.imgur.com/6V891Et.jpeg" alt="Foto de Vinicius Rocha">
+                                    <h3 class="persona-name">VINICIUS ROCHA</h3>
+                                    <p class="persona-focus">USUÁRIO PLATAFORMA <span class="text-arremaq-orange-darker">ARREMAQ</span></p>
+                                    <p class="persona-description"><span class="emoji-in-text">🧑‍🌾</span> VINICIUS PRECISA NEGOCIAR MÁQUINAS PESADAS USADAS DE FORMA EFICIENTE.</p>
+                                    <h4 class="persona-section-title"><span class="emoji-in-text">🎯</span> OBJETIVOS:</h4><ul><li>MAXIMIZAR VALOR DE REVENDA, ACELERAR A VENDA, PROCESSO SEGURO.</li></ul>
+                                    <h4 class="persona-section-title"><span class="emoji-in-text">💡</span> COMO A ARREMAQ AJUDA:</h4><ul><li>MARKETPLACE B2B, DIGITALIZAÇÃO COMPLETA DO PROCESSO, FERRAMENTAS PARA VALORIZAR ATIVOS.</li></ul>
+                                    <p class="persona-arguments"><strong><span class="emoji-in-text">🔑</span> ARGUMENTOS:</strong> "COM A ARREMAQ, VOCÊ VENDE SUAS MÁQUINAS PARADAS COM MAIS AGILIDADE E LUCRO", "NOSSA PLATAFORMA DIGITAL SIMPLIFICA TODO O PROCESSO".</p>
+                                </div>
+                                <div class="persona-card" data-aos="zoom-in-up">
+                                    <img src="https://i.imgur.com/j8ziMtL.jpeg" alt="Foto de José Teodoro">
+                                    <h3 class="persona-name">JOSÉ TEODORO</h3>
+                                    <p class="persona-focus">GERENTE DE ATIVOS (GRANDE VENDEDOR)</p>
+                                    <p class="persona-description"><span class="emoji-in-text">👨‍🔧</span> JOSÉ É O MESTRE DA DESMOBILIZAÇÃO. SUA MISSÃO É GARANTIR A MÁXIMA RENTABILIDADE NA VENDA DOS TITÃS DE AÇO.</p>
+                                    <h4 class="persona-section-title"><span class="emoji-in-text">🎯</span> OBJETIVOS:</h4><ul><li>MAXIMIZAR O VALOR DE REVENDA, ACELERAR O PROCESSO DE VENDA, PROCESSO TRANSPARENTE.</li></ul>
+                                    <h4 class="persona-section-title"><span class="emoji-in-text">😥</span> DORES E DESAFIOS:</h4><ul><li>PROCESSOS LENTOS, DIFICULDADE EM ATINGIR PREÇO DE RESERVA, RISCO COM COMPRADORES.</li></ul>
+                                    <p class="persona-arguments"><strong><span class="emoji-in-text">🔑</span> ARGUMENTOS:</strong> "VENDA SUA FROTA DE MÁQUINAS COM MAIS VELOCIDADE E SEGURANÇA", "DIGITALIZE E GERENCIE TODO O SEU PROCESSO DE DESMOBILIZAÇÃO".</p>
+                                </div>
+                             </div>
+                        </div>
+                    </section>
+                </div>
+                <div class="navigation-buttons">
+                    <button class="btn-nav prev" onclick="navigateModules(-1)">❮ VOLTAR</button>
+                    <button class="btn-nav next" onclick="navigateModules(1)">AVANÇAR ❯</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="arte-comunicacao-section" class="playbook-sub-section hidden">
+            <div class="container mx-auto px-4">
+                <button class="btn-voltar-secao backToTrilhaAprendizadoBtn mb-8 text-sm">
+                    <i class="fas fa-arrow-left mr-2"></i> VOLTAR À TRILHA
+                </button>
+                <h1 class="playbook-content-title text-center" data-aos="fade-down"><span class="emoji-original-color">✍️</span> A ARTE DA COMUNICAÇÃO ESTRATÉGICA</h1>
+                
+                <div class="text-content-container space-y-10 mt-8 max-w-5xl mx-auto">
+                    <div class="content-card" data-aos="fade-up">
+                        <h2 class="content-card-title"><span class="emoji-in-text">🗣️</span> O PODER DA PALAVRA NA PISTA: COMUNIQUE-SE COMO UM CAMPEÃO!</h2>
+                        <p class="text-center"><span class="emoji-in-text">🎙️</span> NOBRE PILOTO DAS VENDAS, A PALAVRA É UMA DAS FERRAMENTAS MAIS PODEROSAS DO SEU KIT DE BOX! <span class="emoji-in-text">🏆</span> A FORMA COMO NOS COMUNICAMOS PODE ABRIR PORTAS, CONSTRUIR PONTES DE CONFIANÇA OU ERGUER BARREIRAS. <span class="emoji-in-text">📖</span> ESTE CAPÍTULO É SEU GUIA PARA UMA COMUNICAÇÃO EFICAZ, PERSUASIVA E ALINHADA COM A EXCELÊNCIA DA AUTO ARREMATE® E ARREMAQ®. <span class="emoji-in-text">🏁</span> VAMOS EXPLORAR MODELOS QUE CONVERTEM, TERMOS QUE BRILHAM E AQUELES QUE DEVEM SER EVITADOS.</p>
+                    </div>
+
+                    <hr class="my-10 border-t-2 border-gray-200 dark:border-gray-700">
+
+                    <div class="content-card" data-aos="fade-up">
+                        <h2 class="content-card-title"><span class="emoji-in-text">🚫</span> PIT STOP LINGUÍSTICO: TERMOS A EVITAR E SUGESTÕES DE OURO</h2>
+                        <p class="text-center mb-8"><span class="emoji-in-text">⚠️</span> ALGUMAS PALAVRAS, MESMO COMUNS, PODEM TRANSMITIR UMA IMAGEM INADEQUADA. <span class="emoji-in-text">🌟</span> BUSCAMOS UMA COMUNICAÇÃO QUE INSPIRE CONFIANÇA, PROFISSIONALISMO E FOCO NO CLIENTE.</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="pdgc-card !text-left">
+                                <h4 class="pdgc-title"><span class="text-red-500">EVITAR:</span> "PROBLEMINHA"</h4>
+                                <p class="pdgc-description"><strong class="text-aa-green">SUGERIR:</strong> "DESAFIO", "PONTO DE ATENÇÃO"</p>
+                            </div>
+                             <div class="pdgc-card !text-left">
+                                <h4 class="pdgc-title"><span class="text-red-500">EVITAR:</span> "BARATO"</h4>
+                                <p class="pdgc-description"><strong class="text-aa-green">SUGERIR:</strong> "ACESSIBILIDADE", "COM EXCELENTE CUSTO-BENEFÍCIO"</p>
+                            </div>
+                             <div class="pdgc-card !text-left">
+                                <h4 class="pdgc-title"><span class="text-red-500">EVITAR:</span> "ACHO QUE..."</h4>
+                                <p class="pdgc-description"><strong class="text-aa-green">SUGERIR:</strong> "ACREDITO QUE...", "COM BASE NOS NOSSOS DADOS..."</p>
+                            </div>
+                             <div class="pdgc-card !text-left">
+                                <h4 class="pdgc-title"><span class="text-red-500">EVITAR:</span> "VOCÊ TEM QUE..."</h4>
+                                <p class="pdgc-description"><strong class="text-aa-green">SUGERIR:</strong> "SUGIRO QUE CONSIDERE...", "UMA ALTERNATIVA SERIA..."</p>
+                            </div>
+                             <div class="pdgc-card !text-left">
+                                <h4 class="pdgc-title"><span class="text-red-500">EVITAR:</span> "NÃO SEI" (SOZINHO)</h4>
+                                <p class="pdgc-description"><strong class="text-aa-green">SUGERIR:</strong> "EXCELENTE PERGUNTA! VOU VERIFICAR PARA VOCÊ."</p>
+                            </div>
+                             <div class="pdgc-card !text-left">
+                                <h4 class="pdgc-title"><span class="text-red-500">EVITAR:</span> "DESCULPE O INCÔMODO"</h4>
+                                <p class="pdgc-description"><strong class="text-aa-green">SUGERIR:</strong> SER DIRETO E MOSTRAR VALOR NO CONTATO.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                     <hr class="my-10 border-t-2 border-gray-200 dark:border-gray-700">
+
+                     <div class="content-card" data-aos="fade-up">
+                        <h2 class="content-card-title"><span class="emoji-in-text">📜</span> MANUAIS DE BORDO: RESPOSTAS PADRÃO (PONTOS DE PARTIDA)</h2>
+                        <p class="text-center mb-8"><span class="emoji-in-text">📄</span> TER MODELOS AGILIZA A COMUNICAÇÃO E GARANTE CONSISTÊNCIA. <strong class="text-arremaq-orange-darker">🎨 LEMBRE-SE: PERSONALIZE SEMPRE!</strong></p>
+                         <div class="space-y-8">
+                            <div class="valor-card">
+                                <h3 class="valor-card-title"><span class="emoji-original-color">📧</span> E-MAIL DE PRIMEIRO CONTATO (LEAD INBOUND)</h3>
+                                <p class="valor-card-text text-left">AGRADEÇA O INTERESSE, REFORCE O BENEFÍCIO PRINCIPAL DA SOLUÇÃO (EX: "OTIMIZAR O GIRO DE ESTOQUE COM MAIS LUCRO") E CONVIDE PARA UMA CONVERSA RÁPIDA PARA ENTENDER OS DESAFIOS ATUAIS E ALINHAR COMO PODEMOS TRAÇAR UMA ESTRATÉGIA VENCEDORA JUNTOS.</p>
+                            </div>
+                             <div class="valor-card">
+                                <h3 class="valor-card-title"><span class="emoji-original-color">📞</span> SCRIPT DE ABERTURA PARA COLD CALL</h3>
+                                <p class="valor-card-text text-left">APRESENTE-SE DE FORMA CONCISA (SEU NOME, DA AUTO ARREMATE/ARREMAQ). MENCIONE QUE VOCÊ AJUDA EMPRESAS COMO A DO PROSPECT A SUPERAR UM DESAFIO ESPECÍFICO (EX: "A VENDER A FROTA DESMOBILIZADA DE FORMA MAIS ÁGIL E RENTÁVEL"). PEÇA POR 2 MINUTOS PARA EXPLICAR COMO, E VERIFIQUE SE FAZ SENTIDO PARA A EQUIPE DELE NAQUELE MOMENTO.</p>
+                            </div>
+                         </div>
+                    </div>
+                </div>
+                <div class="navigation-buttons">
+                    <button class="btn-nav prev" onclick="navigateModules(-1)">❮ VOLTAR</button>
+                    <button class="btn-nav next" onclick="navigateModules(1)">AVANÇAR ❯</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="dicionario-mestres-section" class="playbook-sub-section hidden">
+            <div class="container mx-auto px-4">
+                <button class="btn-voltar-secao backToTrilhaAprendizadoBtn mb-8 text-sm">
+                    <i class="fas fa-arrow-left mr-2"></i> VOLTAR À TRILHA
+                </button>
+                <h1 class="playbook-content-title text-center" data-aos="fade-down"><span class="emoji-original-color">📖</span> DICIONÁRIO DOS MESTRES DA PISTA</h1>
+                
+                <div class="text-content-container space-y-10 mt-8 max-w-5xl mx-auto">
+                    <div class="content-card" data-aos="fade-up">
+                        <h2 class="content-card-title"><span class="emoji-in-text">📚</span> FALANDO A LÍNGUA DOS CAMPEÕES: SEU MANUAL DE TERMOS!</h2>
+                        <p class="text-center"><span class="emoji-in-text">🏎️</span> NOBRE PILOTO, PARA DOMINAR AS PISTAS, É FUNDAMENTAL FALAR A LÍNGUA DOS BOXES! <span class="emoji-in-text">🛠️</span> ESTE GLOSSÁRIO É O SEU "DICIONÁRIO DE BORDO", REUNINDO OS TERMOS E CONCEITOS MAIS IMPORTANTES. <span class="emoji-in-text">🏆</span> CONSULTAR ESTE GUIA É COMO TER UM CONSELHEIRO EXPERIENTE NO SEU RÁDIO: ESSENCIAL PARA CONSTRUIR CREDIBILIDADE E COMUNICAR-SE COM CLAREZA. <span class="emoji-in-text">🏁</span> PREPARE-SE PARA ABASTECER SEU VOCABULÁRIO!</p>
+                    </div>
+
+                    <div class="content-card" data-aos="fade-up">
+                        <h2 class="content-card-title"><span class="emoji-in-text">➕</span> ADICIONAR NOVO TERMO AO DICIONÁRIO</h2>
+                        <div class="flex flex-col md:flex-row gap-4 mb-8">
+                            <input type="text" id="newTermInput" placeholder="NOVO TERMO" class="flex-1 p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                            <input type="text" id="newDefinitionInput" placeholder="DEFINIÇÃO DO TERMO" class="flex-1 p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                            <input type="text" id="newEmojiInput" placeholder="EMOJI (EX: 💡)" class="w-24 p-3 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                            <button id="addTermBtn" class="btn-iniciar !mt-0 !mb-0 px-6 py-3">ADICIONAR</button>
+                        </div>
+                    </div>
+
+                    <div id="alphabeticalTermsContainer">
+                        <!-- Termos do dicionário serão renderizados aqui por JS -->
+                    </div>
+                </div>
+                <div class="navigation-buttons">
+                    <button class="btn-nav prev" onclick="navigateModules(-1)">❮ VOLTAR</button>
+                    <button class="btn-nav next" onclick="navigateModules(1)">AVANÇAR ❯</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="evolucao-continua-section" class="playbook-sub-section hidden">
+            <div class="container mx-auto px-4">
+                <button class="btn-voltar-secao backToTrilhaAprendizadoBtn mb-8 text-sm">
+                    <i class="fas fa-arrow-left mr-2"></i> VOLTAR À TRILHA
+                </button>
+                <h1 class="playbook-content-title text-center" data-aos="fade-down"><span class="emoji-original-color">📈</span> EVOLUÇÃO CONTÍNUA</h1>
+                <div class="text-content-container space-y-10 mt-8 max-w-5xl mx-auto">
+                     <div class="content-card" data-aos="fade-up">
+                        <h2 class="content-card-title"><span class="emoji-in-text">🛠️</span> UM GUIA QUE ACELERA COM VOCÊ: SEMPRE EM APERFEIÇOAMENTO!</h2>
+                        <p class="text-center"><span class="emoji-in-text">🔄</span> UM GUIA ESTRATÉGICO ÉPICO NUNCA ESTÁ FINALIZADO. ELE É UM ORGANISMO VIVO, QUE RESPIRA AS MUDANÇAS DO MERCADO, APRENDE COM CADA BATALHA E SE FORTALECE COM O CONHECIMENTO COLETIVO DA NOSSA EQUIPE (VOCÊS!). <span class="emoji-in-text">✨</span> ESTE CAPÍTULO É O NOSSO PACTO COM A EVOLUÇÃO CONSTANTE.</p>
+                    </div>
+
+                    <hr class="my-10 border-t-2 border-gray-200 dark:border-gray-700">
+
+                    <div class="content-card" data-aos="fade-up">
+                        <h2 class="content-card-title"><span class="emoji-in-text">🗺️</span> AS PRÓXIMAS VOLTAS DA NOSSA SAGA (EM BREVE):</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+                            <div class="valor-card"><h3 class="valor-card-title">CAPÍTULO II - A PISTA AUTOMÁTICA</h3><p class="valor-card-text">GUIA PARA TRADUZIR OS FLUXOS EM WORKFLOWS NO HUBSPOT.</p></div>
+                            <div class="valor-card"><h3 class="valor-card-title">CAPÍTULO III - A CAÇA AO TESOURO</h3><p class="valor-card-text">ESTRATÉGIAS DE PROSPECÇÃO AVANÇADA PARA ENCONTRAR LEADS VALIOSOS.</p></div>
+                            <div class="valor-card"><h3 class="valor-card-title">CAPÍTULO IV - OS OLHOS DO SUPERVISOR</h3><p class="valor-card-text">MERGULHO EM KPIS E COMO A IA PODE TRANSFORMAR DADOS EM INSIGHTS.</p></div>
+                            <div class="valor-card"><h3 class="valor-card-title">CAPÍTULO VI - OS AMIGOS ROBÔS</h3><p class="valor-card-text">CONCEITUAÇÃO DE ASSISTENTES DIGITAIS (CHATBOT, ETC.) PARA AMPLIAR NOSSO ALCANCE.</p></div>
+                        </div>
+                    </div>
+                    
+                    <hr class="my-10 border-t-2 border-gray-200 dark:border-gray-700">
+                    
+                    <div class="highlight" data-aos="fade-up" data-aos-delay="100">
+                        <p>
+                            <strong class="text-center"><span class="emoji-original-color">💡</span> A GARAGEM DE IDEIAS TURBINADAS (IA): SUA VOZ NA EVOLUÇÃO!</strong>
+                            <span class="emoji-original-color">🗣️</span> SUA EXPERIÊNCIA NO CAMPO DE BATALHA É INESTIMÁVEL! <span class="emoji-original-color">🏆</span> QUE NOVAS FUNCIONALIDADES, TÁTICAS OU CAPÍTULOS VOCÊ ACREDITA QUE TORNARIAM ESTE GUIA AINDA MAIS PODEROSO? USE A FERRAMENTA ADEQUADA PARA COMPARTILHAR SUAS IDEIAS. AS MELHORES SUGESTÕES SERÃO INCORPORADAS EM FUTURAS ATUALIZAÇÕES!
+                        </p>
+                    </div>
+                </div>
+                <div class="navigation-buttons">
+                    <button class="btn-nav prev" onclick="navigateModules(-1)">❮ VOLTAR</button>
+                    <button class="btn-nav next" onclick="navigateModules(1)">AVANÇAR ❯</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="central-comando-section" class="playbook-sub-section hidden">
+            <div class="container mx-auto px-4">
+                <button class="btn-voltar-secao backToTrilhaAprendizadoBtn mb-8 text-sm">
+                    <i class="fas fa-arrow-left mr-2"></i> VOLTAR À TRILHA
+                </button>
+                <h1 class="playbook-content-title text-center" data-aos="fade-down"><span class="emoji-original-color">📞</span> CENTRAL DE COMANDO: CONTATO E SUPORTE</h1>
+                
+                <div class="text-content-container space-y-10 mt-8 max-w-5xl mx-auto">
+                    <div class="content-card" data-aos="fade-up">
+                        <h2 class="content-card-title"><span class="emoji-in-text">📡</span> SEUS CANAIS DIRETOS COM A EQUIPE DE BOX!</h2>
+                        <p class="text-center"><span class="emoji-in-text">🎙️</span> PARA GARANTIR QUE VOCÊ ESTEJA SEMPRE CONECTADO, UTILIZE OS CANAIS ABAIXO. LEMBRE-SE, CADA CANAL TEM SUA ESPECIALIDADE PARA GARANTIR A MÁXIMA AGILIDADE!</p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
+                            <a href="mailto:liderancacomercial@autoarremate.com.br" class="valor-card !no-underline" data-aos="fade-up">
+                                <div class="valor-card-icon"><span class="emoji-original-color">📧</span></div>
+                                <h3 class="valor-card-title">E-MAIL</h3>
+                                <p class="valor-card-text">IDEAL PARA DÚVIDAS ESTRATÉGICAS, SUGESTÕES PARA O PLAYBOOK E QUESTÕES QUE PRECISAM DE ANÁLISE PROFUNDA.</p>
+                                <p class="font-bold text-aa-green-darker dark:text-aa-green-text-dark-theme mt-4">LIDERANCACOMERCIAL@AUTOARREMATE.COM.BR</p>
+                            </a>
+                             <a href="tel:01640421197" class="valor-card !no-underline" data-aos="fade-up" data-aos-delay="100">
+                                <div class="valor-card-icon"><span class="emoji-original-color">📞</span></div>
+                                <h3 class="valor-card-title">TELEFONE</h3>
+                                <p class="valor-card-text">PARA SUPORTE URGENTE EM CAMPO E SITUAÇÕES QUE EXIGEM UMA RESPOSTA RÁPIDA E DIRETA.</p>
+                                <p class="font-bold text-aa-green-darker dark:text-aa-green-text-dark-theme mt-4">016 4042-1197 (RAMAL: XXXX)</p>
+                            </a>
+                             <div class="valor-card" data-aos="fade-up" data-aos-delay="200">
+                                <div class="valor-card-icon"><span class="emoji-original-color">💬</span></div>
+                                <h3 class="valor-card-title">GRUPO DE WHATSAPP</h3>
+                                <p class="valor-card-text">"ESTRATEGISTAS AAR" - PARA COMUNICAÇÃO ÁGIL, COMPARTILHAMENTO DE INSIGHTS E DÚVIDAS RÁPIDAS. ACESSE VIA CONVITE DO SEU GESTOR.</p>
+                            </div>
+                             <div class="valor-card" data-aos="fade-up" data-aos-delay="300">
+                                <div class="valor-card-icon"><span class="emoji-original-color">💻</span></div>
+                                <h3 class="valor-card-title">PLATAFORMA DE SUPORTE</h3>
+                                <p class="valor-card-text">DISPONÍVEL DENTRO DA PLATAFORMA AUTO ARREMATE/ARREMAQ PARA DÚVIDAS TÉCNICAS, BUGS OU PROBLEMAS DE USABILIDADE.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="navigation-buttons">
+                    <button class="btn-nav prev" onclick="navigateModules(-1)">❮ VOLTAR</button>
+                    <button class="btn-nav next" onclick="navigateModules(1)">AVANÇAR ❯</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="quiz-section" class="playbook-sub-section hidden">
+            <div class="container mx-auto px-4">
+                <button class="btn-voltar-secao backToTrilhaAprendizadoBtn mb-8 text-sm">
+                    <i class="fas fa-arrow-left mr-2"></i> VOLTAR À TRILHA
+                </button>
+                <h1 id="quiz-title" class="playbook-content-title text-center" data-aos="fade-down"><span class="emoji-original-color">❓</span> QUIZ DO MÓDULO: TESTE SEU CONHECIMENTO!</h1>
+                <div class="text-content-container space-y-8 mt-8">
+                    <div class="content-card" data-aos="fade-up">
+                        <p class="text-center text-lg"><span class="emoji-in-text">🚧</span> ESTE QUIZ ESTÁ EM CONSTRUÇÃO! VOLTE EM BREVE PARA TESTAR SEUS CONHECIMENTOS!</p>
+                        <p class="text-center text-lg">SUA PONTUAÇÃO ATUAL É: <strong id="currentScoreDisplay" class="text-aa-green-darker">0 PONTOS</strong></p>
+                        <div class="flex justify-center mt-6">
+                            <button id="completeModuleBtn" class="btn-iniciar !mt-0 !mb-0 px-6 py-3">
+                                <span class="emoji-in-text">✅</span> MARCAR MÓDULO COMO COMPLETO (GANHAR 100 PONTOS)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="navigation-buttons">
+                    <button class="btn-nav prev" onclick="navigateModules(-1)">❮ VOLTAR</button>
+                    <button class="btn-nav next" onclick="navigateModules(1)">AVANÇAR ❯</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="certificate-section" class="playbook-sub-section hidden">
+            <div class="container mx-auto px-4">
+                <button class="btn-voltar-secao backToTrilhaAprendizadoBtn mb-8 text-sm">
+                    <i class="fas fa-arrow-left mr-2"></i> VOLTAR À TRILHA
+                </button>
+                <h1 class="playbook-content-title text-center" data-aos="fade-down"><span class="emoji-original-color">🏅</span> CERTIFICADO DE CONCLUSÃO!</h1>
+                <div class="text-content-container space-y-8 mt-8 flex flex-col items-center">
+                    <div class="content-card w-full max-w-2xl" data-aos="fade-up">
+                        <p class="text-center text-lg"><span class="emoji-in-text">✨</span> PARABÉNS POR CONCLUIR SUA TRILHA DE APRENDIZADO!</p>
+                        <p class="text-center text-lg">SUA PONTUAÇÃO FINAL FOI: <strong id="finalScoreDisplay" class="text-arremaq-orange-darker">0 PONTOS</strong></p>
+                        <button id="generateCertificateBtn" class="btn-iniciar mt-8 px-6 py-3">
+                            <span class="emoji-in-text">📜</span> GERAR CERTIFICADO
+                        </button>
+                    </div>
+                </div>
+                <div class="navigation-buttons">
+                    <button class="btn-nav prev" onclick="navigateModules(-1)">❮ VOLTAR</button>
+                    <button class="btn-nav next" onclick="navigateModules(1)">AVANÇAR ❯</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="placeholder-content-section" class="playbook-sub-section hidden">
+             <div class="container mx-auto">
+                <button class="btn-voltar-secao backToTrilhaAprendizadoBtn mb-8 text-sm">
+                    <i class="fas fa-arrow-left mr-2"></i> VOLTAR À TRILHA
+                </button>
+                <h2 id="content-title-placeholder" class="text-2xl font-bold text-center my-8"></h2>
+                <p id="content-paragraph-placeholder" class="text-lg text-center"></p>
+             </div>
+        </section>
+
+    </main>
+
+    <button id="themeToggleBtn" class="theme-toggle-button" aria-label="Alternar tema" title="Alternar Tema">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- Modal para o Certificado -->
+    <div id="certificateModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="closeCertificateModal">&times;</span>
+            <h2 class="certificate-title"><span class="emoji-original-color">🏆</span> CERTIFICADO DE MESTRE DA PISTA <span class="emoji-original-color">🥇</span></h2>
+            <img src="https://placehold.co/600x400/16B097/FFFFFF?text=CERTIFICADO&font=manrope" alt="Certificado de Conclusão da Trilha" class="certificate-image">
+            <p class="certificate-text">ESTE CERTIFICADO CONFIRMA QUE <strong class="text-aa-green-darker">VOCÊ</strong> CONCLUIU A TRILHA DE APRENDIZADO COM SUCESSO!</p>
+            <p class="certificate-score">PONTUAÇÃO FINAL: <span id="modalScore">0</span> PONTOS</p>
+            <p class="certificate-text">ASSINADO DIGITALMENTE PELA EQUIPE <span class="text-aa-green-darker">AUTO ARREMATE</span> & <span class="text-arremaq-orange-darker">ARREMAQ</span>.</p>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Inicializar Animate on Scroll
+            AOS.init({ duration: 700, once: true, offset: 50 });
+
+            // --- Seletores de Elementos ---
+            const allSections = document.querySelectorAll('main > section');
+            const capaSection = document.getElementById('capa-section');
+            const menuPrincipalSection = document.getElementById('menu-principal-section');
+            const trilhaAprendizadoSection = document.getElementById('trilha-aprendizado-section');
+            const arremaqContentSection = document.getElementById('arremaq-content-section');
+            const placeholderContentSection = document.getElementById('placeholder-content-section');
+            const quizSection = document.getElementById('quiz-section');
+            const certificateSection = document.getElementById('certificate-section');
+
+
+            const btnIniciarCapa = document.getElementById('btnIniciarCapa');
+            const backToCoverBtnMenu = document.getElementById('backToCoverBtnMenu');
+            const openTrilhaAprendizadoBtn = document.getElementById('openTrilhaAprendizadoBtn');
+            const backToMenuPrincipalBtns = document.querySelectorAll('.backToMenuPrincipalBtn');
+            const backToTrilhaAprendizadoBtns = document.querySelectorAll('.backToTrilhaAprendizadoBtn');
+
+            const progressBarFill = document.getElementById('progressBarFill');
+            const progressBarLabel = document.getElementById('progressBarLabel');
+
+            const currentScoreDisplay = document.getElementById('currentScoreDisplay');
+            const finalScoreDisplay = document.getElementById('finalScoreDisplay');
+            const modalScore = document.getElementById('modalScore');
+            const completeModuleBtn = document.getElementById('completeModuleBtn');
+            const generateCertificateBtn = document.getElementById('generateCertificateBtn');
+            const certificateModal = document.getElementById('certificateModal');
+            const closeCertificateModal = document.getElementById('closeCertificateModal');
+
+            // --- Gerenciamento de Estado ---
+            let currentModuleIndex = 0;
+            let totalModules = 0;
+            let userScore = 0; // Pontuação do usuário
+            let completedModules = JSON.parse(localStorage.getItem('completedModules')) || {}; // Rastreia módulos completos
+            let dictionaryTerms = JSON.parse(localStorage.getItem('dictionaryTerms')) || [
+                { term: "ALIENAÇÃO FIDUCIÁRIA", definition: "GARANTIA DE UM BEM (VEÍCULO) EM UM FINANCIAMENTO. O BEM PERTENCE AO CREDOR ATÉ A QUITAÇÃO DA DÍVIDA.", emoji: "📝" },
+                { term: "B2B (BUSINESS-TO-BUSINESS)", definition: "MODELO DE NEGÓCIO ONDE AS TRANSAÇÕES COMERCIAIS OCORREM EXCLUSIVAMENTE ENTRE EMPRESAS.", emoji: "🤝" },
+                { term: "CAC (CUSTO DE AQUISIÇÃO DE CLIENTE)", definition: "CUSTO TOTAL DE MARKETING E VENDAS PARA CONQUISTAR UM NOVO CLIENTE.", emoji: "💸" },
+                { term: "CADÊNCIA", definition: "SEQUÊNCIA E FREQUÊNCIA DE CONTATOS (E-MAILS, LIGAÇÕES) EM UM PROCESSO DE PROSPECÇÃO.", emoji: "⏳" },
+                { term: "CRM (CUSTOMER RELATIONSHIP MNGMT)", definition: "SOFTWARE PARA GERENCIAR E ANALISAR AS INTERAÇÕES COM CLIENTES E PROSPECTS.", emoji: "📊" },
+                { term: "ICP (IDEAL CUSTOMER PROFILE)", definition: "PERFIL DE CLIENTE IDEAL. DESCRIÇÃO DA EMPRESA QUE MAIS SE BENEFICIA E GERA VALOR COM SUA SOLUÇÃO.", emoji: "🎯" },
+                { term: "KPI (KEY PERFORMANCE INDICATOR)", definition: "INDICADOR-CHAVE DE DESEMPENHO. MÉTRICAS USADAS PARA AVALIAR O SUCESSO DE UMA ATIVIDADE.", emoji: "📈" },
+                { term: "LEAD QUALIFICADO", definition: "PROSPECT QUE SE ENCAIXA NO PERFIL DE CLIENTE IDEAL E DEMONSTRA INTERESSE NA SOLUÇÃO.", emoji: "💡" },
+                { term: "MARKETPLACE B2B", definition: "PLATAFORMA ONLINE ONDE EMPRESAS PODEM VENDER E COMPRAR PRODUTOS/SERVIÇOS DE OUTRAS EMPRESAS.", emoji: "🌐" },
+                { term: "MQL (MARKETING QUALIFIED LEAD)", definition: "LEAD QUE FOI QUALIFICADO PELO TIME DE MARKETING E ESTÁ PRONTO PARA SER ENVIADO PARA VENDAS.", emoji: "📧" },
+                { term: "PDGC", definition: "SIGLA PARA OS PILARES DA AUTO ARREMATE: PRECIFICAÇÃO, DIVULGAÇÃO, GESTÃO E COMERCIALIZAÇÃO.", emoji: "✨" },
+                { term: "PERSONA", definition: "REPRESENTAÇÃO SEMI-FICTÍCIA DO SEU CLIENTE IDEAL, COM DETALHES SOBRE SEUS OBJETIVOS, DORES E COMPORTAMENTO.", emoji: "🎭" },
+                { term: "RAIOX / RAIOX+", definition: "FERRAMENTAS DE INSPEÇÃO DIGITAL E CONSULTA DE HISTÓRICO VEICULAR DA AUTO ARREMATE.", emoji: "🔎" },
+                { term: "RAPPORT", definition: "CRIAÇÃO DE UMA CONEXÃO DE CONFIANÇA E EMPATIA COM O PROSPECT NO INÍCIO DA CONVERSA.", emoji: "🤝" },
+                { term: "REMARKETING", definition: "PROCESSO DE VENDA DE VEÍCULOS PROVENIENTES DE FROTAS DE LOCADORAS APÓS O FIM DO CICLO DE USO.", emoji: "🔄" },
+                { term: "REPASSE", definition: "VENDA DE VEÍCULOS DO ESTOQUE DE UMA CONCESSIONÁRIA PARA OUTROS LOJISTAS OU REVENDEDORES (B2B).", emoji: "💰" },
+                { term: "SAAS (SOFTWARE AS A SERVICE)", definition: "SOFTWARE COMO SERVIÇO. MODELO DE NEGÓCIO ONDE A SOLUÇÃO É ACESSADA ONLINE VIA ASSINATURA.", emoji: "☁️" },
+                { term: "SDR (SALES DEVELOPMENT REP)", definition: "PROFISSIONAL FOCADO NA PROSPECÇÃO E QUALIFICAÇÃO INICIAL DE LEADS PARA O TIME DE VENDAS.", emoji: "📞" },
+                { term: "WORKFLOWS", definition: "FLUXOS DE TRABALHO AUTOMATIZADOS PARA OTIMIZAR PROCESSOS DE VENDAS E MARKETING.", emoji: "⚙️" }
+            ];
+            
+
+            /**
+             * Oculta todas as seções principais e mostra a especificada.
+             * @param {HTMLElement} sectionToShow A seção a ser visível.
+             */
+            function showSection(sectionToShow) {
+                allSections.forEach(s => {
+                    if (s) s.classList.add('hidden');
+                });
+
+                if (sectionToShow) {
+                    sectionToShow.classList.remove('hidden');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    AOS.refreshHard(); // Re-inicializa AOS para novos elementos
+
+                    // Ajusta o tema de acordo com a seção, se necessário (ex: Arremaq tem tema distinto)
+                    if (sectionToShow === arremaqContentSection) {
+                        document.documentElement.setAttribute('data-current-section-theme', 'arremaq');
+                    } else {
+                        document.documentElement.removeAttribute('data-current-section-theme');
+                    }
+                    applyTheme(document.documentElement.getAttribute('data-theme') || 'light'); // Reaplicar tema para atualizar cores
+                }
+            }
+
+            // --- Listeners de Eventos de Navegação ---
+            if (btnIniciarCapa) {
+                btnIniciarCapa.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    showSection(menuPrincipalSection);
+                });
+            }
+            if (backToCoverBtnMenu) {
+                backToCoverBtnMenu.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    showSection(capaSection);
+                });
+            }
+            if (openTrilhaAprendizadoBtn) {
+                openTrilhaAprendizadoBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    showSection(trilhaAprendizadoSection);
+                    renderTrilhaIndex();
+                    updateProgressBar();
+                });
+            }
+            backToMenuPrincipalBtns.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    showSection(menuPrincipalSection);
+                });
+            });
+            backToTrilhaAprendizadoBtns.forEach(button => {
+                 button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    showSection(trilhaAprendizadoSection);
+                    updateProgressBar(); // Atualiza a barra ao voltar para a trilha
+                });
+            });
+
+            // --- Dados do Índice da Trilha de Aprendizado (Atualizados) ---
+            const indexDataTrilha = [
+                { emoji: "📜", title: "<strong>MÓDULO 1</strong>: NOSSA PISTA DE DECOLAGEM", sub: "CONHEÇA O MOTOR QUE IMPULSIONA A AUTO ARREMATE & ARREMAQ: NOSSA CULTURA, MISSÃO E O TIME DE CAMPEÕES.", contentId: "pista-decolagem-section", completed: false },
+                { emoji: "🚗", title: "<strong>MÓDULO 2</strong>: AUTO ARREMATE NA POLE POSITION", sub: "DESCUBRA COMO NOSSA PLATAFORMA ACELERA A GESTÃO E VENDA DE VEÍCULOS LEVES, DA CAPTAÇÃO À COMERCIALIZAÇÃO.", contentId: "auto-arremate-content-section", completed: false },
+                { emoji: "🚜", title: "<strong>MÓDULO 3</strong>: ARREMAQ", sub: "SOLUÇÕES DE PESO E ESTRATÉGIAS ROBUSTAS PARA O REPASSE EFICIENTE DE MÁQUINAS AGRÍCOLAS E DE CONSTRUÇÃO.", contentId: "arremaq-content-section", completed: false },
+                { emoji: "🎯", title: "<strong>MÓDULO 4</strong>: MAPEANDO OS CAMPEÕES", sub: "IDENTIFIQUE OS PERFIS DE CLIENTES COM MAIOR POTENCIAL E AS PERSONAS CHAVE PARA UMA ABORDAGEM ESTRATÉGICA.", contentId: "mapeando-campeoes-section", completed: false },
+                { emoji: "📊", title: "<strong>MÓDULO 5</strong>: A JORNADA DO CLIENTE VENCEDOR", sub: "VISUALIZE A TRANSFORMAÇÃO DO CLIENTE, DA NECESSIDADE À SOLUÇÃO, ATRAVÉS DE NOSSA ANIMAÇÃO DINÂMICA.", contentId: "placeholder-content-section", completed: false },
+                { emoji: "🚀", title: "<strong>MÓDULO 6</strong>: ACELERAÇÃO TÁTICA TOTAL", sub: "SEU CENTRO DE COMANDO PARA CONECTAR, QUALIFICAR E CONVERTER. TODAS AS ESTRATÉGIAS, PARA TODAS AS PERSONAS, EM UM SÓ LUGAR.", contentId: "placeholder-content-section", completed: false },
+                { emoji: "✍️", title: "<strong>MÓDULO 7</strong>: A ARTE DA COMUNICAÇÃO ESTRATÉGICA", sub: "TERMOS DE IMPACTO, ORIENTAÇÕES E EXEMPLOS PRÁTICOS PARA UMA COMUNICAÇÃO PERSUASIVA E EFICAZ.", contentId: "arte-comunicacao-section", completed: false },
+                { emoji: "📖", title: "<strong>MÓDULO 8</strong>: DICIONÁRIO DOS MESTRES", sub: "DECIFRE OS TERMOS TÉCNICOS E JARGÕES DO MERCADO PARA DOMINAR A LINGUAGEM DO SETOR.", contentId: "dicionario-mestres-section", completed: false },
+                { emoji: "📈", title: "<strong>MÓDULO 9</strong>: EVOLUÇÃO CONTÍNUA", sub: "OS PRÓXIMOS PASSOS PARA O DESENVOLVIMENTO DO PLAYBOOK E O CRESCIMENTO CONTÍNUO DA NOSSA EQUIPE.", contentId: "evolucao-continua-section", completed: false },
+                { emoji: "📞", title: "<strong>MÓDULO 10</strong>: CENTRAL DE COMANDO", sub: "ACESSE NOSSOS CANAIS DE SUPORTE DEDICADOS E ENCONTRE AJUDA RÁPIDA PARA SUAS DÚVIDAS E DESAFIOS.", contentId: "central-comando-section", completed: false },
+                { emoji: "❓", title: "<strong>MÓDULO 11</strong>: QUIZ DO MÓDULO (TESTE SEU CONHECIMENTO!)", sub: "TESTE SEU CONHECIMENTO ESTRATÉGICO EM NOSSO QUIZ GAMIFICADO SOBRE A TRILHA!", contentId: "quiz-section", completed: false },
+                { emoji: "🏅", title: "<strong>MÓDULO FINAL</strong>: CERTIFICADO DE CONCLUSÃO", sub: "RECEBA SEU CERTIFICADO E CELEBRE SUA CONQUISTA AO FINALIZAR A TRILHA DE APRENDIZADO!", contentId: "certificate-section", completed: false },
+            ];
+
+            totalModules = indexDataTrilha.length;
+            const trilhaIndexContainer = document.getElementById('trilhaIndexContainer');
+
+            /**
+             * Renderiza os cartões de índice da trilha no container.
+             */
+            function renderTrilhaIndex() {
+                if (!trilhaIndexContainer) return;
+                trilhaIndexContainer.innerHTML = ''; // Limpa o conteúdo anterior
+
+                indexDataTrilha.forEach((item, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'index-item-card';
+                    card.setAttribute('data-aos', 'fade-up');
+
+                    // Atualiza o status de conclusão do módulo com base no localStorage
+                    item.completed = completedModules[item.contentId] || false;
+                    const completedClass = item.completed ? 'opacity-60 border-l-green-500' : '';
+                    const completedEmoji = item.completed ? '<span class="emoji-in-text text-green-500">✅</span>' : '';
+
+                    let emojiHtml = item.emoji.includes("<span") ? item.emoji : `<span class="emoji-original-color">${item.emoji}</span>`;
+
+                    card.innerHTML = `
+                        <span class="index-item-emoji">${emojiHtml}</span>
+                        <h3 class="index-item-title">${item.title}</h3>
+                        <p class="index-item-sub">
+                            ${completedEmoji}
+                            ${item.sub}
+                        </p>`;
+
+                    // Adiciona listener de clique para mostrar a seção de conteúdo correta
+                    card.addEventListener('click', () => {
+                        currentModuleIndex = index; // Atualiza o índice do módulo atual
+                        const targetContentSection = document.getElementById(item.contentId);
+                        if (targetContentSection) {
+                            if (item.contentId === 'placeholder-content-section') {
+                                document.getElementById('content-title-placeholder').innerHTML = item.title;
+                                document.getElementById('content-paragraph-placeholder').innerText = "CONTEÚDO PARA ESTA SEÇÃO ESTÁ EM DESENVOLVIMENTO. VOLTE EM BREVE!";
+                            } else if (item.contentId === 'quiz-section') {
+                                document.getElementById('quiz-title').innerHTML = `<span class="emoji-original-color">❓</span> QUIZ DO MÓDULO ${index + 1}: TESTE SEU CONHECIMENTO!`;
+                                updateQuizScoreDisplay();
+                            } else if (item.contentId === 'certificate-section') {
+                                displayFinalScore();
+                            } else if (item.contentId === 'dicionario-mestres-section') {
+                                renderDictionaryTerms(); // Renderiza o dicionário ao abrir a seção
+                            }
+                            showSection(targetContentSection);
+                        }
+                    });
+
+                    trilhaIndexContainer.appendChild(card);
+                });
+                 AOS.refresh();
+            }
+
+            // Função para navegar entre os módulos
+            function navigateModules(direction) {
+                let nextIndex = currentModuleIndex + direction;
+
+                if (nextIndex >= 0 && nextIndex < indexDataTrilha.length) {
+                    currentModuleIndex = nextIndex;
+                    const nextModule = indexDataTrilha[currentModuleIndex];
+                    const targetContentSection = document.getElementById(nextModule.contentId);
+                    if (targetContentSection) {
+                         if (nextModule.contentId === 'placeholder-content-section') {
+                            document.getElementById('content-title-placeholder').innerHTML = nextModule.title;
+                            document.getElementById('content-paragraph-placeholder').innerText = "CONTEÚDO PARA ESTA SEÇÃO ESTÁ EM DESENVOLVIMENTO. VOLTE EM BREVE!";
+                        } else if (nextModule.contentId === 'quiz-section') {
+                            document.getElementById('quiz-title').innerHTML = `<span class="emoji-original-color">❓</span> QUIZ DO MÓDULO ${currentModuleIndex + 1}: TESTE SEU CONHECIMENTO!`;
+                            updateQuizScoreDisplay();
+                        } else if (nextModule.contentId === 'certificate-section') {
+                            displayFinalScore();
+                        } else if (nextModule.contentId === 'dicionario-mestres-section') {
+                            renderDictionaryTerms();
+                        }
+                        showSection(targetContentSection);
+                    }
+                } else if (nextIndex === totalModules) { // Se for o último módulo e tentar avançar, leva para o certificado
+                     currentModuleIndex = totalModules - 1; // Ajusta para o último módulo
+                     showSection(certificateSection);
+                     displayFinalScore();
+                }
+            }
+            // Adiciona listeners para os botões de navegação dentro das seções de conteúdo
+            document.querySelectorAll('.navigation-buttons .btn-nav.prev').forEach(button => {
+                button.addEventListener('click', () => navigateModules(-1));
+            });
+            document.querySelectorAll('.navigation-buttons .btn-nav.next').forEach(button => {
+                button.addEventListener('click', () => navigateModules(1));
+            });
+
+
+            // --- Barra de Progresso ---
+            function updateProgressBar() {
+                const completedCount = Object.values(completedModules).filter(status => status).length;
+                const progressPercentage = (completedCount / totalModules) * 100;
+                progressBarFill.style.width = `${progressPercentage}%`;
+                progressBarLabel.innerText = `${Math.round(progressPercentage)}% COMPLETO`;
+                localStorage.setItem('userScore', userScore); // Salva a pontuação
+            }
+
+            // --- Gerenciamento de Pontuação e Conclusão de Módulo ---
+            function updateQuizScoreDisplay() {
+                currentScoreDisplay.innerText = `${userScore} PONTOS`;
+                // Desabilita o botão se o módulo já foi completado
+                if (completedModules[indexDataTrilha[currentModuleIndex].contentId]) {
+                    completeModuleBtn.disabled = true;
+                    completeModuleBtn.innerText = 'MÓDULO JÁ COMPLETO';
+                } else {
+                    completeModuleBtn.disabled = false;
+                    completeModuleBtn.innerHTML = '<span class="emoji-in-text">✅</span> MARCAR MÓDULO COMO COMPLETO (GANHAR 100 PONTOS)';
+                }
+            }
+
+            if (completeModuleBtn) {
+                completeModuleBtn.addEventListener('click', () => {
+                    const currentModuleId = indexDataTrilha[currentModuleIndex].contentId;
+                    if (!completedModules[currentModuleId]) {
+                        userScore += 100;
+                        completedModules[currentModuleId] = true;
+                        localStorage.setItem('completedModules', JSON.stringify(completedModules));
+                        updateQuizScoreDisplay();
+                        updateProgressBar();
+                        completeModuleBtn.disabled = true;
+                        completeModuleBtn.innerText = 'MÓDULO COMPLETO!';
+                        // Opcional: Animar a pontuação
+                        // console.log(`Módulo ${currentModuleIndex + 1} completo! Pontuação: ${userScore}`);
+                    }
+                });
+            }
+
+            function displayFinalScore() {
+                finalScoreDisplay.innerText = `${userScore} PONTOS`;
+                modalScore.innerText = userScore;
+            }
+
+            // --- Geração de Certificado (Modal) ---
+            if (generateCertificateBtn) {
+                generateCertificateBtn.addEventListener('click', () => {
+                    certificateModal.classList.add('show');
+                });
+            }
+            if (closeCertificateModal) {
+                closeCertificateModal.addEventListener('click', () => {
+                    certificateModal.classList.remove('show');
+                });
+            }
+            // Fechar modal ao clicar fora do conteúdo
+            window.addEventListener('click', (event) => {
+                if (event.target === certificateModal) {
+                    certificateModal.classList.remove('show');
+                }
+            });
+
+
+            // --- Dicionário: Renderização e Adição de Termos ---
+            const newTermInput = document.getElementById('newTermInput');
+            const newDefinitionInput = document.getElementById('newDefinitionInput');
+            const newEmojiInput = document.getElementById('newEmojiInput');
+            const addTermBtn = document.getElementById('addTermBtn');
+            const alphabeticalTermsContainer = document.getElementById('alphabeticalTermsContainer');
+
+            function renderDictionaryTerms() {
+                alphabeticalTermsContainer.innerHTML = ''; // Limpa o conteúdo anterior
+                const sortedTerms = [...dictionaryTerms].sort((a, b) => a.term.localeCompare(b.term, 'pt-BR'));
+
+                let currentLetter = '';
+                let currentLetterDiv = null;
+
+                const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('');
+                const termsByLetter = {};
+                alphabet.forEach(letter => termsByLetter[letter] = []);
+                sortedTerms.forEach(term => {
+                    const firstLetter = term.term.charAt(0).toUpperCase();
+                    if (termsByLetter[firstLetter]) {
+                        termsByLetter[firstLetter].push(term);
+                    }
+                });
+
+                alphabet.forEach(letter => {
+                    const termsForLetter = termsByLetter[letter];
+                    if (termsForLetter.length > 0) {
+                        const letterCard = document.createElement('div');
+                        letterCard.className = 'alphabet-card';
+                        letterCard.setAttribute('data-aos', 'fade-up');
+                        letterCard.innerHTML = `
+                            <div class="alphabet-letter">${letter}</div>
+                            <div class="alphabet-count">${termsForLetter.length} TERMO(S)</div>
+                        `;
+                        alphabeticalTermsContainer.appendChild(letterCard);
+
+                        const termsListDiv = document.createElement('div');
+                        termsListDiv.className = 'grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 mb-8';
+                        termsListDiv.setAttribute('data-aos', 'fade-up');
+                        termsForLetter.forEach(term => {
+                            const termCard = document.createElement('div');
+                            termCard.className = 'dictionary-term-card';
+                            termCard.innerHTML = `
+                                <h4 class="dictionary-term-title"><span class="dictionary-term-emoji">${term.emoji}</span> ${term.term}</h4>
+                                <p class="dictionary-term-description">${term.definition}</p>
+                            `;
+                            termsListDiv.appendChild(termCard);
+                        });
+                        alphabeticalTermsContainer.appendChild(termsListDiv);
+                    }
+                });
+                AOS.refresh();
+            }
+
+            if (addTermBtn) {
+                addTermBtn.addEventListener('click', () => {
+                    const term = newTermInput.value.trim().toUpperCase();
+                    const definition = newDefinitionInput.value.trim().toUpperCase();
+                    const emoji = newEmojiInput.value.trim();
+
+                    if (term && definition) {
+                        dictionaryTerms.push({ term, definition, emoji: emoji || '📚' }); // Emoji padrão se não fornecido
+                        localStorage.setItem('dictionaryTerms', JSON.stringify(dictionaryTerms));
+                        renderDictionaryTerms();
+                        newTermInput.value = '';
+                        newDefinitionInput.value = '';
+                        newEmojiInput.value = '';
+                    } else {
+                        // Poderia usar um modal customizado para feedback em vez de alert()
+                        console.error('POR FAVOR, PREENCHA O TERMO E A DEFINIÇÃO.');
+                    }
+                });
+            }
+
+
+            // --- Alternador de Tema ---
+            const htmlEl = document.documentElement;
+            const themeToggleBtn = document.getElementById('themeToggleBtn');
+            const moonIcon = '<i class="fas fa-moon"></i>';
+            const sunIcon = '<i class="fas fa-sun"></i>';
+
+            function applyTheme(theme) {
+                htmlEl.setAttribute('data-theme', theme);
+                if (themeToggleBtn) {
+                    themeToggleBtn.innerHTML = theme === 'dark' ? sunIcon : moonIcon;
+
+                    if (document.documentElement.getAttribute('data-current-section-theme') === 'arremaq') {
+                        themeToggleBtn.setAttribute('data-arremaq-theme', 'true');
+                    } else {
+                        themeToggleBtn.removeAttribute('data-arremaq-theme');
+                    }
+                }
+            }
+
+            let storedTheme = null;
+            try { storedTheme = localStorage.getItem('theme'); } catch (e) { console.warn("LocalStorage não disponível para persistência de tema.");}
+            const preferredTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            applyTheme(storedTheme || preferredTheme);
+
+            if (themeToggleBtn) {
+                themeToggleBtn.addEventListener('click', () => {
+                    const newTheme = htmlEl.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+                    applyTheme(newTheme);
+                    try { localStorage.setItem('theme', newTheme); } catch (e) { console.warn("LocalStorage não disponível para persistência de tema."); }
+                });
+            }
+
+            // --- Acessibilidade: Controles de Tamanho de Fonte ---
+            const increaseFontBtn = document.getElementById('increaseFontBtn');
+            const decreaseFontBtn = document.getElementById('decreaseFontBtn');
+            const FONT_STEP_PERCENT = 10;
+            const MIN_HTML_FONT_PERCENT = 60;
+            const MAX_HTML_FONT_PERCENT = 140;
+
+            function getCurrentHtmlFontSizePercent() {
+                const currentSizePx = parseFloat(window.getComputedStyle(htmlEl).fontSize);
+                const browserBaseSizePx = 16; // Tamanho de fonte padrão do navegador
+                return (currentSizePx / browserBaseSizePx) * 100;
+            }
+
+            if (increaseFontBtn) {
+                increaseFontBtn.addEventListener('click', () => {
+                    let currentPercent = getCurrentHtmlFontSizePercent();
+                    let newPercent = currentPercent + FONT_STEP_PERCENT;
+                    htmlEl.style.fontSize = Math.min(newPercent, MAX_HTML_FONT_PERCENT) + '%';
+                });
+            }
+            if (decreaseFontBtn) {
+                decreaseFontBtn.addEventListener('click', () => {
+                    let currentPercent = getCurrentHtmlFontSizePercent();
+                    let newPercent = currentPercent - FONT_STEP_PERCENT;
+                    htmlEl.style.fontSize = Math.max(newPercent, MIN_HTML_FONT_PERCENT) + '%';
+                });
+            }
+
+            // --- Acessibilidade: Leitura de Texto (Text-to-Speech) ---
+            const readPageBtn = document.getElementById('readPageBtn');
+            const synth = window.speechSynthesis;
+            if (readPageBtn && synth) {
+                readPageBtn.addEventListener('click', () => {
+                    if (synth.speaking) {
+                        synth.cancel();
+                        readPageBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+                        return;
+                    }
+                    let activeSection = document.querySelector('section:not(.hidden)');
+                    if (!activeSection) return;
+
+                    let textToRead = Array.from(activeSection.querySelectorAll('h1, h2, h3, h4, p, strong, .menu-card-title, .index-item-title, .index-item-sub, .valor-card-text, .pdgc-title, .pdgc-description, .superpower-title, .superpower-description, .highlight p, .highlight-box-arremaq .highlight-text'))
+                        .map(el => el.textContent.trim())
+                        .join('. ');
+
+                    if (!textToRead) return;
+
+                    let utterance = new SpeechSynthesisUtterance(textToRead);
+                    utterance.lang = 'pt-BR';
+                    utterance.onstart = () => { readPageBtn.innerHTML = '<i class="fas fa-stop-circle"></i>'; };
+                    utterance.onend = () => { readPageBtn.innerHTML = '<i class="fas fa-volume-up"></i>'; };
+                    utterance.onerror = (event) => { console.error('SpeechSynthesis Error:', event.error); readPageBtn.innerHTML = '<i class="fas fa-volume-up"></i>'; };
+                    synth.speak(utterance);
+                });
+            } else if (readPageBtn) {
+                readPageBtn.style.display = 'none'; // Oculta o botão se a API não for suportada
+            }
+
+            // Inicializa a pontuação e barra de progresso ao carregar a página
+            userScore = parseInt(localStorage.getItem('userScore')) || 0;
+            updateProgressBar();
+            renderTrilhaIndex(); // Garante que o índice é renderizado na carga inicial
+
+        });
+    </script>
+</body>
+</html>
