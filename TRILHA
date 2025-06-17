@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portal Auto Arremate® / Arremaq 3.0 - Trilha de Aprendizado</title>
-    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -38,10 +38,10 @@
             --arremaq-orange-darkest: #6b3e00;
 
             /* Fontes */
-            --font-headings-cover: 'Manrope', sans-serif;
-            --font-body-cover: 'Manrope', sans-serif;
-            --font-primary-portal: 'Manrope', sans-serif;
-            --font-headings-portal: 'Sora', sans-serif;
+            --font-headings-cover: 'Montserrat', sans-serif;
+            --font-body-cover: 'Montserrat', sans-serif;
+            --font-primary-portal: 'Montserrat', sans-serif;
+            --font-headings-portal: 'Montserrat', sans-serif;
 
             /* Fundos */
             --bg-main-light: var(--aa-green-pastel); /* Default para capa e pitstop detalhes */
@@ -105,7 +105,7 @@
         html {
             scroll-behavior: smooth;
             font-family: var(--font-body-cover);
-            font-size: 91%;
+            font-size: 105%;
         }
         body {
             margin: 0;
@@ -306,7 +306,7 @@
         .content-card {
             background-color: var(--bg-content-light-portal);
             border-radius: var(--radius-xl);
-            padding: 2rem;
+            padding: 2.5rem;
             box-shadow: var(--shadow-lg);
             transition: all var(--transition-main);
             border: 1px solid var(--border-color-light-portal);
@@ -365,7 +365,7 @@
         .playbook-section-title .emoji { margin-right: 0.5rem; color: var(--aa-green); }
         html[data-theme='dark'] .playbook-section-title .emoji { color: var(--aa-green-lighter); }
 
-        .text-content-container p { margin-bottom: 1.25rem; line-height: 1.8; font-size: 1rem; color: var(--text-body-light-portal); }
+        .text-content-container p { margin-bottom: 1.6rem; line-height: 1.9; font-size: 1.2rem; color: var(--text-body-light-portal); }
         html[data-theme='dark'] .text-content-container p { color: var(--text-body-dark-portal); }
         .playbook-text p { font-size: 0.85rem; line-height: 1.8; margin-bottom: 1rem; }
         .playbook-text .sentence-emoji { margin-right: 0.3em; font-size: 1em; }
@@ -414,9 +414,10 @@
              color: var(--text-headings-dark-portal);
         }
         .valor-card-text {
-            font-size: 0.9rem;
-            line-height: 1.6;
+            font-size: 1rem;
+            line-height: 1.7;
             color: var(--text-body-light-portal);
+            margin-bottom: 1.25rem;
         }
         html[data-theme='dark'] .valor-card-text {
              color: var(--text-body-dark-portal);
@@ -474,10 +475,11 @@
         }
 
         .pdgc-description, .superpower-description {
-            font-size: 0.78rem;
-            line-height: 1.6;
+            font-size: 0.85rem;
+            line-height: 1.7;
             color: var(--text-body-light-portal);
             margin-top: auto; /* Pushes description to bottom if card height varies */
+            margin-bottom: 1.25rem;
         }
         html[data-theme='dark'] .pdgc-description,
         html[data-theme='dark'] .superpower-description {
@@ -1014,8 +1016,8 @@
             #trilhaIndexContainer.grid-cols-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
             #trilhaIndexContainer .index-item-card { min-height: 180px; }
             .playbook-section-title { font-size: clamp(1.1rem, 2.2vw, 1.5rem); }
-            .text-content-container p, .playbook-text p { font-size: 0.9rem; }
-            .content-card { padding: 1.5rem; }
+            .text-content-container p, .playbook-text p { font-size: 1rem; }
+            .content-card { padding: 2rem; }
             .content-card-title { font-size: clamp(1.1rem, 2.2vw, 1.5rem); }
             .dictionary-alphabet-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
             .dictionary-term-card { padding: 0.75rem 1rem; }
@@ -1037,7 +1039,7 @@
             .menu-principal-title { font-size: clamp(1rem, 2.8vw, 1.5rem); }
             .trilha-aprendizado-main-title, .playbook-content-title { font-size: clamp(1.1rem, 2.8vw, 1.5rem); }
             .menu-card { min-height: 200px; }
-            .text-content-container p, .playbook-text p { font-size: 0.85rem; }
+            .text-content-container p, .playbook-text p { font-size: 0.9rem; }
             .progress-bar-container { width: 95%; }
             .modal-content { padding: 1.5rem; }
             .certificate-title { font-size: 1.5rem; }
@@ -1323,22 +1325,22 @@
                             <div class="superpower-card" data-aos="fade-up" data-aos-delay="100">
                                 <div class="superpower-emoji">🔌</div>
                                 <h4 class="superpower-title">INTEGRAÇÕES: CONECTANDO SEU UNIVERSO!</h4>
-                                <p class="superpower-description">NOSSA PLATAFORMA FALA A LÍNGUA DO SEU NEGÓCIO! INTEGRAMOS FACILMENTE COM OS PRINCIPAIS CRMS E ERPS DO MERCADO, GARANTINDO UM FLUXO DE DADOS AUTOMÁTICO E SEM GARGALOS.</P>
+                                <p class="superpower-description">NOSSA PLATAFORMA FALA A LÍNGUA DO SEU NEGÓCIO! INTEGRAMOS FACILMENTE COM OS PRINCIPAIS CRMS E ERPS DO MERCADO, GARANTINDO UM FLUXO DE DADOS AUTOMÁTICO E SEM GARGALOS.</p>
                             </div>
                              <div class="superpower-card" data-aos="fade-up" data-aos-delay="200">
                                 <div class="superpower-emoji">🔑</div>
                                 <h4 class="superpower-title">JORNADA PÓS-VENDA: FECHANDO COM CHAVE DE OURO!</h4>
-                                <p class="superpower-description">A VENDA NÃO TERMINA NA ASSINATURA! OFERECEMOS FERRAMENTAS PARA GERENCIAR A JORNADA PÓS-VENDA, GARANTINDO A SATISFAÇÃO E FIDELIZAÇÃO DO SEU CLIENTE.</P>
+                                <p class="superpower-description">A VENDA NÃO TERMINA NA ASSINATURA! OFERECEMOS FERRAMENTAS PARA GERENCIAR A JORNADA PÓS-VENDA, GARANTINDO A SATISFAÇÃO E FIDELIZAÇÃO DO SEU CLIENTE.</p>
                             </div>
                             <div class="superpower-card" data-aos="fade-up">
                                 <div class="superpower-emoji">🔒</div>
                                 <h4 class="superpower-title">PERMISSÕES DE ACESSO: CONTROLE TOTAL!</h4>
-                                <p class="superpower-description">SEGURANÇA E CONTROLE SÃO FUNDAMENTAIS. DEFINA QUEM PODE VER E FAZER O QUÊ DENTRO DA PLATAFORMA, GARANTINDO QUE CADA MEMBRO DA EQUIPE TENHA O ACESSO CERTO.</P>
+                                <p class="superpower-description">SEGURANÇA E CONTROLE SÃO FUNDAMENTAIS. DEFINA QUEM PODE VER E FAZER O QUÊ DENTRO DA PLATAFORMA, GARANTINDO QUE CADA MEMBRO DA EQUIPE TENHA O ACESSO CERTO.</p>
                             </div>
                            <div class="superpower-card" data-aos="fade-up" data-aos-delay="100">
                                 <div class="superpower-emoji">📦</div>
                                 <h4 class="superpower-title">MODELO DE OFERTAS EM LOTE: COMPRE MAIS, MAIS FÁCIL!</h4>
-                                <p class="superpower-description">PARA QUEM BUSCA VOLUME COM INTELIGÊNCIA. PERMITE QUE COMPRADORES ADQUIRAM MÚLTIPLOS VEÍCULOS DE UMA SÓ VEZ, COM CONDIÇÕES ESPECIAIS E UM PROCESSO SIMPLIFICADO.</P>
+                                <p class="superpower-description">PARA QUEM BUSCA VOLUME COM INTELIGÊNCIA. PERMITE QUE COMPRADORES ADQUIRAM MÚLTIPLOS VEÍCULOS DE UMA SÓ VEZ, COM CONDIÇÕES ESPECIAIS E UM PROCESSO SIMPLIFICADO.</p>
                             </div>
                         </div>
                     </section>
@@ -1399,7 +1401,7 @@
                              <div class="super-power-card" data-aos="fade-up" data-aos-delay="400">
                                 <div class="super-power-icon">🔗</div>
                                 <h4 class="super-power-title">INTEGRAÇÃO COM ERPS</h4>
-                                <p class="super-power-text">SINCRONIZE NOSSA PLATAFORMA COM SEUS SISTEMAS DE GESTÃO PARA UM FLUXO DE DADOS EFICIENTE, EVITANDO RETRABALHO E CONSOLIDANDO SUA OPERAÇÃO.</P>
+                                <p class="super-power-text">SINCRONIZE NOSSA PLATAFORMA COM SEUS SISTEMAS DE GESTÃO PARA UM FLUXO DE DADOS EFICIENTE, EVITANDO RETRABALHO E CONSOLIDANDO SUA OPERAÇÃO.</p>
                             </div>
                         </div>
                     </div>
